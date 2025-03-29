@@ -1,4 +1,6 @@
 // date.h dátumkezelő osztály (deklarációk) - 2025.03.29. SAXHSH
+#ifndef DATE_H
+#define DATE_H
 
 /// @class Date
 /// @brief Dátumokat nyílvántartó osztály
@@ -37,3 +39,5 @@ public:
     /// @return lhs és rhs megegyező dátumok
     bool operator==(const Date& rhs) const;
 };
+
+#endif
