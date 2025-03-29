@@ -1,4 +1,4 @@
-/*********************************
+/********************************
 Memoriaszivargas-detektor
 Keszitette: Peregi Tamas, BME IIT, 2011
             petamas@iit.bme.hu
