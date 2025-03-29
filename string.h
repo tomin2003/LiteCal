@@ -3,7 +3,7 @@
 #define STRING_H
 
 /// @class String
-/// @brief Egy dinamikus sztringkezelő osztály.
+/// @brief Egy dinamikus sztringkezelő osztály
 /// RAII elven működő, automatikusan memóriafoglalást és felszabadítást megvalósító osztály, felüldefiniált operátorokkal.
 class String {
 private:    
@@ -15,8 +15,14 @@ public:
     String() : len(0), pData(new char[1]{'\0'}) {}
     
     /// @brief Paraméteres konstruktor
+    /// C-stringből String objektumot készít.
     /// @param str C-string ('\0'-val lezárt)
     String(const char* str);
+
+    /// @brief Paraméteres konstruktor
+    /// Karakterből String objektumot készít.
+    /// @param c Karakter
+    String(char c) :len(1), pData(new char[len+1]{c, '\0'}) {}
 
     /// @brief Másoló konstruktor
     /// @param rhs A másolandó String objektum
@@ -44,6 +50,22 @@ public:
     /// @param rhs Jobbról hozzáfűzött String
     /// @return Új String objektum
     String operator+(const String& rhs) const;
+
+    /// @brief Sztring hozzáfűzés
+    /// Az "strcat" C függvényt alkalmazza.
+    /// @param rhs Jobbról hozzáfűzött karakter
+    /// @return Új String objektum
+    String operator+(char c) const;
+
+    /// @brief Értékadó hozzáfűzés
+    /// @param rhs A hozzáfűzendő String
+    /// @return Hozzáfűzött String
+    String& operator+=(const String& rhs);
+
+    /// @brief Értékadó hozzáfűzés
+    /// @param rhs A hozzáfűzendő karakter
+    /// @return Hozzáfűzött String
+    String& operator+=(char c);
     
     /// @brief Indexelő operátor
     /// Módosíthatja a hívó objektumot. Végez indexellenőrzést, kivétellel tér vissza érvénytelen indexelés esetén.
@@ -65,7 +87,7 @@ public:
     /// @brief ABC sorrend szerinti összehasonlítása két sztringnek
     /// @param rhs A hívóval összehasonlítandó String
     /// @return lhs hátrébb van-e az ABC-ben, mint rhs
-    bool operator>(const String& rhs) const;
+    bool operator<(const String& rhs) const;
 
     /// @brief Két sztring megegyező-e
     /// @param rhs A hívóval összehasonlítandó String
