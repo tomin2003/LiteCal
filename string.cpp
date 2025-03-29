@@ -91,12 +91,13 @@ bool String::operator==(const String& rhs) const {
     return (strcmp(pData, rhs.pData) == 0);
 }
 
-// stream operátor
+// kiírás
 std::ostream& operator<<(std::ostream& os, const String& rhs) {
     os << rhs.c_str();
     return os;
 }
 
+// beolvasás
 std::istream& operator>>(std::istream& is, String& rhs) {
     char c;
     String uj;
