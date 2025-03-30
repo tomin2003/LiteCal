@@ -3,6 +3,7 @@
 #include "date.h"
 #include <cstddef>
 #include <cmath>
+#include <stdexcept>
 
 /* Statikus adattag definíciók */
 
@@ -18,8 +19,17 @@ bool Date::isLeapYear() const {
     return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
 }
 
+bool Date::isValid() const {
+    if (month < 1 || month > 12 || year < 1900) return false;
+
+    int maxDays = monthDays[month - 1];
+    if (month == 2 && isLeapYear()) maxDays = 29;
+    return day >= 1 && day <= maxDays;
+}
+
 const char* Date::getWeekDay() const {
     // Zeller's Congruence
+    if (!isValid()) throw std::invalid_argument("Érvénytelen dátum!");
     size_t q = day; // nap
     size_t m = month; // hónap
     size_t y = year; // év
