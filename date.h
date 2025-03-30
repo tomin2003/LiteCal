@@ -12,20 +12,40 @@ private:
     static const int monthDays[12]; ///< adott hónapban a napok száma
     static const char* weekDays[7]; ///< a hét napjai
 public:
+    /// @brief Default konstruktor
+    /// Alapértelmezett dátum 1970.01.01. (Unix time)
+    Date() :year(1970), month(1), day(1)  {}
+
+    /// @brief Paraméteres konstruktor
+    /// @param year év
+    /// @param month hónap
+    /// @param day nap
+    Date(int year, int month, int day) :year(year), month(month), day(day) {}
+
     /// @brief Getter függvény
     /// @return év
-    int getYear() { return year; }
+    int getYear() const { return year; }
 
     /// @brief Getter függvény
     /// @return hónap
-    int getMonth() { return month; } 
+    int getMonth() const { return month; } 
 
     /// @brief Getter függvény
     /// @return nap
-    int getDay() { return day; }
+    int getDay() const { return day; }
+
+    /// @brief Megállapítja egy évről, hogy az szökőév-e
+    /// @return igen/nem
+    bool isLeapYear() const;
+
+    /// @brief Megállapítja, hogy egy dátum milyen napra esik.
+    /// Ehhez a "Zeller's Congruence" nevű algoritmust használtam. 
+    /// Forrás: https://www.geeksforgeeks.org/zellers-congruence-find-day-date/
+    /// @return A hét egy adott napja
+    const char* getWeekDay() const;
 
     /// @brief Két dátum összehasonlítása
-    /// @param rhs összehasonlítás jobboldala
+    /// @param rhs összehasonlítás jobboldalayy
     /// @return lhs frisebb dátum mint rhs
     bool operator>(const Date& rhs) const;
 
