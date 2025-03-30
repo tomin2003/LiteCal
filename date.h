@@ -43,7 +43,7 @@ public:
     bool isValid() const;
 
     /// @brief Megállapítja, hogy egy dátum milyen napra esik.
-    /// Ehhez a "Zeller's Congruence" nevű algoritmust használtam. 
+    /// Ehhez a "Zeller's congruence" nevű algoritmust használtam. 
     /// Forrás: https://www.geeksforgeeks.org/zellers-congruence-find-day-date/
     /// @return A hét egy adott napja
     const char* getWeekDay() const;
