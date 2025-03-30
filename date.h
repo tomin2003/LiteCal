@@ -1,4 +1,4 @@
-// date.h dátumkezelő osztály (deklarációk) - 2025.03.29. SAXHSH
+// date.h dátumkezelő osztály (deklarációk/inlineok) - 2025.03.29. SAXHSH
 #ifndef DATE_H
 #define DATE_H
 
