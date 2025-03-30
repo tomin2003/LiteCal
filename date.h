@@ -20,7 +20,7 @@ public:
     /// @param year év
     /// @param month hónap
     /// @param day nap
-    Date(int year, int month, int day) :year(year), month(month), day(day) {}
+    Date(int year = 1970, int month = 1, int day = 1) :year(year), month(month), day(day) {}
 
     /// @brief Getter függvény
     /// @return év
@@ -37,6 +37,10 @@ public:
     /// @brief Megállapítja egy évről, hogy az szökőév-e
     /// @return igen/nem
     bool isLeapYear() const;
+
+    /// @brief Megállapítja egy dátumról, hogy érvényes-e.
+    /// @return igen/nem
+    bool isValid() const;
 
     /// @brief Megállapítja, hogy egy dátum milyen napra esik.
     /// Ehhez a "Zeller's Congruence" nevű algoritmust használtam. 
