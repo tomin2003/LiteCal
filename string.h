@@ -13,16 +13,16 @@ public:
     /// @brief Paraméter nélküli konstruktor
     /// Egy üres sztringet reprezentál
     String() : len(0), pData(new char[1]{'\0'}) {}
+
+    /// @brief Paraméteres konstruktor
+    /// Karakterből String objektumot készít.
+    /// @param c Karakter
+    String(char c) :len(1), pData(new char[2]{c, '\0'}) {}
     
     /// @brief Paraméteres konstruktor
     /// C-stringből String objektumot készít.
     /// @param str C-string ('\0'-val lezárt)
     String(const char* str);
-
-    /// @brief Paraméteres konstruktor
-    /// Karakterből String objektumot készít.
-    /// @param c Karakter
-    String(char c) :len(1), pData(new char[len+1]{c, '\0'}) {}
 
     /// @brief Másoló konstruktor
     /// @param rhs A másolandó String objektum
