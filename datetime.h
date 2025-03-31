@@ -2,6 +2,8 @@
 #ifndef DATETIME_H
 #define DATETIME_H
 
+#include <iostream>
+
 /// @class Datetime
 /// @brief Dátumokat és időpontokat nyílvántartó osztály
 class Datetime {
@@ -24,7 +26,7 @@ public:
     /// @param day nap
     /// @param hour óra
     /// @param minute perc
-    Datetime(int year = 1970, int month = 1, int day = 1, int hour = 0, int minute = 0) :year(year), month(month), day(day), hour(hour), minute(minute) {}
+    Datetime(int year, int month, int day, int hour, int minute) :year(year), month(month), day(day), hour(hour), minute(minute) {}
 
     /// @brief Getter függvény
     /// @return év
@@ -75,5 +77,7 @@ public:
     /// @return lhs és rhs megegyező dátum és idő
     bool operator==(const Datetime& rhs) const;
 };
+
+std::ostream& operator<<(std::ostream& os, const Datetime& rhs);
 
 #endif

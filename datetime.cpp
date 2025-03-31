@@ -1,9 +1,11 @@
 // datetime.cpp dátum és időkezelő osztály (definíciók) - 2025.03.31. SAXHSH
 
 #include "datetime.h"
+#include <iostream>
 #include <cstddef>
 #include <cmath>
 #include <stdexcept>
+#include <iomanip>
 
 /* Statikus adattag definíciók */
 
@@ -65,4 +67,10 @@ bool Datetime::operator<(const Datetime& rhs) const {
 
 bool Datetime::operator==(const Datetime& rhs) const {
     return (year == rhs.year && month == rhs.month && day == rhs.day && hour == rhs.hour && day == rhs.day);
+}
+
+std::ostream& operator<<(std::ostream& os, const Datetime& rhs) {
+    os << rhs.getYear() << ". " << std::setfill('0') << std::setw(2) << rhs.getMonth() << ". " << std::setw(2) 
+    << rhs.getDay() << ". " << std::setw(2) << rhs.getHour() << ':' << std::setw(2) << rhs.getMinute();
+    return os;
 }
