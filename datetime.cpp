@@ -22,7 +22,8 @@ bool Datetime::isLeapYear() const {
 }
 
 bool Datetime::isValid() const {
-    if (year < 1900 || month < 1 || month > 12 || hour < 0 || hour > 23 || minute < 0 || minute > 59) return false;
+    if (year < 1900 || year > 2100 || month < 1 || month > 12 || 
+        hour < 0 || hour > 23 || minute < 0 || minute > 59) return false;
     // nap ellenőrzés
     int maxDays = monthDays[month - 1];
     if (month == 2 && isLeapYear()) maxDays = 29;

@@ -11,7 +11,7 @@
 /// A többi (éves, havi) naptár alaposztálya
 class Calendar {
 private:
-    Event* events; ///< események dinamikus tömbje
+    Event *events; ///< események dinamikus tömbje
     size_t nEvents; ///< események száma
 public:
     /// @brief Default konstruktor
@@ -21,9 +21,32 @@ public:
     /// Virtuális
     virtual ~Calendar() { delete[] events; }
 
-    void radixSort();
-    void binSearch();
+    /// @brief Iterátor (az osztályon belül)
+    class Iterator {
+        private:
+            Event *ptr;
+        public:
+            Iterator(Event *p) : ptr(p) {}
+            
+    };
+
     virtual void printCalendar() = 0;
+};
+
+class monthlyCalendar : public Calendar {
+private:
+    int selMonth;
+public:
+    monthlyCalendar(int selMonth) :selMonth(selMonth) {}
+    void printCalendar();
+};
+
+class yearlyCalendar : public Calendar {
+private:
+    int selYear;
+public:
+    yearlyCalendar(int selYear) :selYear(selYear) {}
+    void printCalendar();
 };
 
 #endif
