@@ -3,6 +3,9 @@
 #ifndef EVENT_H
 #define EVENT_H
 
+#include "string.h"
+#include "datetime.h"
+
 /// @class Event
 /// @brief Eseményekhez dátumot és időt, leírást párosító osztály
 class Event {
