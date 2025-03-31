@@ -1,4 +1,4 @@
-// date.cpp dátumkezelő osztály (definíciók) - 2025.03.29. SAXHSH
+// datetime.cpp dátum és időkezelő osztály (definíciók) - 2025.03.31. SAXHSH
 
 #include "datetime.h"
 #include <cstddef>
