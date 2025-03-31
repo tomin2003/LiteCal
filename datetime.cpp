@@ -51,23 +51,23 @@ const char* Datetime::getWeekDay() const {
 /* Logikai összehasonlítások */
 
 bool Datetime::operator>(const Datetime& rhs) const {
-    return (year > rhs.year) || 
-           (year == rhs.year && month > rhs.month) || 
-           (year == rhs.year && month == rhs.month && day > rhs.day) ||
-           (year == rhs.year && month == rhs.month && day == rhs.day && hour > rhs.hour) ||
-           (year == rhs.year && month == rhs.month && day == rhs.day && hour == rhs.hour && minute > rhs.minute);
+    if (year != rhs.year) return year > rhs.year;
+    if (month != rhs.month) return month > rhs.month;
+    if (day != rhs.day) return day > rhs.day;
+    if (hour != rhs.hour) return hour > rhs.hour;
+    return minute > rhs.minute;
 }
 
 bool Datetime::operator<(const Datetime& rhs) const {
-    return (year < rhs.year) || 
-           (year == rhs.year && month < rhs.month) || 
-           (year == rhs.year && month == rhs.month && day < rhs.day) ||
-           (year == rhs.year && month == rhs.month && day == rhs.day && hour < rhs.hour) ||
-           (year == rhs.year && month == rhs.month && day == rhs.day && hour == rhs.hour && minute < rhs.minute);
+    if (year != rhs.year) return year < rhs.year;
+    if (month != rhs.month) return month < rhs.month;
+    if (day != rhs.day) return day < rhs.day;
+    if (hour != rhs.hour) return hour < rhs.hour;
+    return minute > rhs.minute;
 }
 
 bool Datetime::operator==(const Datetime& rhs) const {
-    return (year == rhs.year && month == rhs.month && day == rhs.day && hour == rhs.hour && day == rhs.day);
+    return year == rhs.year && month == rhs.month && day == rhs.day && hour == rhs.hour && minute == rhs.minute;
 }
 
 std::ostream& operator<<(std::ostream& os, const Datetime& rhs) {
