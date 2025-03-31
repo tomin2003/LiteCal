@@ -14,9 +14,12 @@ private:
     Event* events; ///< események dinamikus tömbje
     size_t nEvents; ///< események száma
 public:
+    /// @brief Default konstruktor
     Calendar() :events(new Event) {}
 
-    ~Calendar() { delete[] events; }
+    /// @brief Destruktor
+    /// Virtuális
+    virtual ~Calendar() { delete[] events; }
 
     void radixSort();
     void binSearch();
