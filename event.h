@@ -21,6 +21,9 @@ public:
     /// @param desc Leírás sztring objektum
     Event(const Datetime& Dt, const String& desc) :evTime(Dt), evDesc(desc) {}
 
+    /// @brief Értékadó operátor
+    /// @param rhs Új érték
+    /// @return Megváltozott értékű objektum
     Event& operator=(const Event& rhs) {
         if (this != &rhs) {
             evTime = rhs.evTime;
@@ -28,6 +31,28 @@ public:
         }
         return *this;
     }
+
+    /// @brief Esemény összehasonlítása dátum alapján
+    /// @param rhs Összehasonlítás jobb oldala
+    /// @return lhs frisebb dátumú-e mint rhs
+    bool operator>(const Event& rhs) {
+        return evTime > rhs.evTime;
+    }
+
+    /// @brief Esemény összehasonlítása dátum alapján
+    /// @param rhs Összehasonlítás jobb oldala
+    /// @return lhs régebbi dátumú-e mint rhs
+    bool operator<(const Event& rhs) {
+        return evTime < rhs.evTime;
+    }
+
+    /// @brief Két esemény megegyezősége
+    /// @param rhs Összehasonlítás jobb oldala
+    /// @return lhs és rhs megegyező dátumúak-e
+    bool operator==(const Event& rhs) {
+        return evTime == rhs.evTime;
+    }
+
 };
 
 #endif

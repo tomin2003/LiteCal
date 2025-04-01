@@ -64,17 +64,17 @@ public:
 
     /// @brief Két dátum és idő összehasonlítása
     /// @param rhs összehasonlítás jobboldalayy
-    /// @return lhs frisebb dátum és idő mint rhs
+    /// @return lhs frisebb dátum és idő-e mint rhs
     bool operator>(const Datetime& rhs) const;
 
     /// @brief Két dátum és idő összehasonlítása
     /// @param rhs összehasonlítás jobboldala
-    /// @return lhs régebbi dátum és idő mint rhs
+    /// @return lhs régebbi dátum és idő-e mint rhs
     bool operator<(const Datetime& rhs) const;
 
     /// @brief Két dátum és idő összehasonlítása
     /// @param rhs összehasonlítás jobboldala
-    /// @return lhs és rhs megegyező dátum és idő
+    /// @return lhs és rhs megegyező dátum és idő-e
     bool operator==(const Datetime& rhs) const;
 };
 
