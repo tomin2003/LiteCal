@@ -26,7 +26,9 @@ public:
     /// @param day nap
     /// @param hour óra
     /// @param minute perc
-    Datetime(int year, int month, int day, int hour, int minute) :year(year), month(month), day(day), hour(hour), minute(minute) {}
+    Datetime(int year, int month, int day, int hour, int minute) :year(year), month(month), day(day), hour(hour), minute(minute) {
+        if (!isValid()) throw std::invalid_argument("Érvénytelen dátum formátum!");
+    }
 
     /// @brief Getter függvény
     /// @return év
