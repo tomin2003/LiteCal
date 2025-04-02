@@ -48,13 +48,18 @@ public:
     /// @return perc
     int getMinute() const { return minute; }
 
+    
     /// @brief Megállapítja egy évről, hogy az szökőév-e
     /// @return igen/nem
     bool isLeapYear() const;
-
+    
     /// @brief Megállapítja egy dátumról, hogy érvényes-e.
     /// @return igen/nem
     bool isValid() const;
+    
+    /// @brief Egy dátum reprezentációja napokban
+    /// @return 1970.01.01. (unix epoch) óta eltelt napok száma
+    int dateInDays() const;
 
     /// @brief Megállapítja, hogy egy dátum milyen napra esik.
     /// Ehhez a "Zeller's congruence" nevű algoritmust használtam. 
@@ -76,6 +81,11 @@ public:
     /// @param rhs összehasonlítás jobboldala
     /// @return lhs és rhs megegyező dátum és idő-e
     bool operator==(const Datetime& rhs) const;
+
+    /// @brief Két dátum között eltelt napok száma
+    /// @param rhs másik dátum
+    /// @return eltelt napok száma
+    int operator-(const Datetime& rhs) const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Datetime& rhs);

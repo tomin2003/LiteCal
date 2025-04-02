@@ -4,4 +4,34 @@
 #include "event.h"
 #include "string.h"
 #include "datetime.h"
+#include <algorithm>
 
+/* Konstruktorok */
+
+Calendar::Calendar(const Event& event) :nEvents(nEvents+1), events(new Event[nEvents]) {
+    events[nEvents] = event;
+}
+
+Calendar::Calendar(const Calendar& rhs) :nEvents(rhs.nEvents), events(new Event[nEvents]) {
+    size_t i = 0;
+    for (Event &e : *this) {
+        e = rhs.events[i++];
+    }
+}
+
+Calendar& Calendar::operator=(const Calendar& rhs) {
+    if (this != &rhs) {
+        delete[] events;
+        nEvents = rhs.nEvents;
+        events = new Event[nEvents];
+        size_t i = 0;
+        for (Event &e : *this) {
+            e = rhs.events[i++];
+        }
+    }
+    return *this;
+}
+
+void Calendar::sort() {
+    std::sort(this->begin(), this->end());
+}

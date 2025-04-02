@@ -22,7 +22,7 @@ bool Datetime::isLeapYear() const {
 }
 
 bool Datetime::isValid() const {
-    if (year < 1900 || year > 2100 || month < 1 || month > 12 || 
+    if (year < 1970 || year > 2100 || month < 1 || month > 12 || 
         hour < 0 || hour > 23 || minute < 0 || minute > 59) return false;
     // nap ellenőrzés
     int maxDays = monthDays[month - 1];
@@ -48,6 +48,11 @@ const char* Datetime::getWeekDay() const {
     return weekDays[h];
 }
 
+int Datetime::dateInDays() const {
+    int base_date = 1970*365;
+    // continue
+}
+
 /* Logikai összehasonlítások */
 
 bool Datetime::operator>(const Datetime& rhs) const {
@@ -68,6 +73,12 @@ bool Datetime::operator<(const Datetime& rhs) const {
 
 bool Datetime::operator==(const Datetime& rhs) const {
     return year == rhs.year && month == rhs.month && day == rhs.day && hour == rhs.hour && minute == rhs.minute;
+}
+
+/* Felüldefiniált műveletek */
+
+int Datetime::operator-(const Datetime& rhs) const {
+
 }
 
 std::ostream& operator<<(std::ostream& os, const Datetime& rhs) {
