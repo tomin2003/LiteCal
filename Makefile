@@ -1,21 +1,21 @@
-# Variables
+# Változók
 CXX = g++
 CXXFLAGS = -pedantic -Wall -Werror -g -DMEMTRACE
 OBJ = string.o calendar.o datetime.o memtrace.o test.o
 HEADERS = string.h calendar.h event.h memtrace.h datetime.h
 TARGET = test
 
-# Default rule
+# Alapértelmezett
 all: $(TARGET)
 
-# Linking step
+# Linkelés lépések
 $(TARGET): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-# Compilation step (fixed file extensions and dependencies)
+# Fordítási lépések
 %.o: %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Clean rule (removes object files and executable)
+# Takarítás
 clean:
 	rm -f $(OBJ) $(TARGET)
