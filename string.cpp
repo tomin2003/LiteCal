@@ -58,12 +58,12 @@ String& String::operator+=(char c) {
 }
 
 char& String::operator[](int i) {
-    if (i < 0 || i >= len) throw std::out_of_range ("Túlindexelted a sztringet!");
+    if (i < 0 || i >= (int)len) throw std::out_of_range ("Túlindexelted a sztringet!");
     return pData[i];
 }
 
 char String::operator[](int i) const {
-    if (i < 0 || i >= len) throw std::out_of_range ("Túlindexelted a sztringet!");
+    if (i < 0 || i >= (int)len) throw std::out_of_range ("Túlindexelted a sztringet!");
     return pData[i];
 }
 

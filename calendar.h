@@ -7,27 +7,6 @@
 #include "string.h"
 #include "datetime.h"
 
-
-    
-
-class monthlyCalendar : public Calendar {
-private:
-    int selMonth;
-public:
-    monthlyCalendar(int selMonth) :selMonth(selMonth) {}
-    void printCalendar();
-};
-
-class yearlyCalendar : public Calendar {
-private:
-    int selYear;
-public:
-    yearlyCalendar(int selYear) :selYear(selYear) {}
-    void printCalendar();
-};
-
-#endif
-
 /// @class Calendar
 /// A többi (éves, havi) naptár alaposztálya
 class Calendar {
@@ -35,9 +14,9 @@ private:
     size_t nEvents; ///< események száma
     Event *events; ///< események dinamikus tömbje
 public:
-    /// @brief Default konstruktor
+/// @brief Default konstruktor
     Calendar() : nEvents(0), events(new Event[0]) {}
-
+    
     /// @brief Paraméteres konstruktor
     /// @param event Egy esemény
     Calendar(const Event& event);
@@ -45,7 +24,7 @@ public:
     /// @brief Másoló konstruktor
     /// @param rhs Másolt objektum
     Calendar(const Calendar& rhs);
-
+    
     /// @brief Értékadó operátor
     /// @param rhs Átadott érték
     Calendar& operator=(const Calendar& rhs);
@@ -74,8 +53,26 @@ public:
     /// @brief Az eseményeket sorba rendező függvény
     /// A standard library sort függvényét alkalmazza az események tömbjére.
     void sort();
-
+    
     /// @brief Naptárt kiíró függvény
     /// A származtatott naptárosztályok használják
-    virtual void printCalendar();
+    //virtual void printCalendar();
 };
+
+class monthlyCalendar : public Calendar {
+    private:
+        int selMonth;
+    public:
+        monthlyCalendar(int selMonth) :selMonth(selMonth) {}
+        void printCalendar();
+    };
+    
+class yearlyCalendar : public Calendar {
+private:
+    int selYear;
+public:
+    yearlyCalendar(int selYear) :selYear(selYear) {}
+    void printCalendar();
+};
+
+#endif

@@ -8,9 +8,7 @@
 
 /* Konstruktorok */
 
-Calendar::Calendar(const Event& event) :nEvents(nEvents+1), events(new Event[nEvents]) {
-    events[nEvents] = event;
-}
+
 
 Calendar::Calendar(const Calendar& rhs) :nEvents(rhs.nEvents), events(new Event[nEvents]) {
     size_t i = 0;
@@ -34,4 +32,9 @@ Calendar& Calendar::operator=(const Calendar& rhs) {
 
 void Calendar::sort() {
     std::sort(this->begin(), this->end());
+}
+
+std::ostream& operator<<(std::ostream& os, const Event& rhs){
+    os << rhs.getEvTime() << ' ' <<rhs.getEvDesc();
+    return os;
 }

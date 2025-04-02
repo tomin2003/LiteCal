@@ -2,6 +2,9 @@
 #ifndef STRING_H
 #define STRING_H
 
+#include <cstddef>
+#include <iostream>
+
 /// @class String
 /// @brief Egy dinamikus sztringkezelő osztály
 /// RAII elven működő, automatikusan memóriafoglalást és felszabadítást megvalósító osztály, felüldefiniált operátorokkal.

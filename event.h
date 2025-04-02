@@ -21,6 +21,10 @@ public:
     /// @param desc Leírás sztring objektum
     Event(const Datetime& Dt, const String& desc) :evTime(Dt), evDesc(desc) {}
 
+    Datetime getEvTime() const { return evTime; }
+
+    String getEvDesc() const { return evDesc; }
+
     /// @brief Értékadó operátor
     /// @param rhs Új érték
     /// @return Megváltozott értékű objektum
@@ -52,7 +56,8 @@ public:
     bool operator==(const Event& rhs) {
         return evTime == rhs.evTime;
     }
-
 };
+
+std::ostream& operator<<(std::ostream& os, const Event& rhs);
 
 #endif
