@@ -21,6 +21,10 @@ bool Datetime::isLeapYear() const {
     return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
 }
 
+bool Datetime::isLeapYear(int y) const {
+    return (y % 400 == 0) || ((y % 4 == 0) && (y % 100 != 0));
+}
+
 bool Datetime::isValid() const {
     if (year < 1970 || year > 2100 || month < 1 || month > 12 || 
         hour < 0 || hour > 23 || minute < 0 || minute > 59) return false;
@@ -49,8 +53,17 @@ const char* Datetime::getWeekDay() const {
 }
 
 int Datetime::dateInDays() const {
-    int base_date = 1970*365;
-    // continue
+    int days = day;
+    for (int i = 0; i < month; i++) {
+        days += monthDays[i];
+        // Ha szökév van és február: +1 nap
+        if (isLeapYear() && i == 2-1) days++; 
+    }
+    for (int i = 1970; i < year; i++) {
+        // Itt van felhasználva a felüldefiniált isLeapYear(int)
+        days += (isLeapYear(i) ? 366 : 365);
+    }
+    return days;
 }
 
 /* Logikai összehasonlítások */
@@ -78,7 +91,11 @@ bool Datetime::operator==(const Datetime& rhs) const {
 /* Felüldefiniált műveletek */
 
 int Datetime::operator-(const Datetime& rhs) const {
+    return abs(dateInDays()-rhs.dateInDays());
+}
 
+bool isLeapYear(int year) {
+    return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
 }
 
 std::ostream& operator<<(std::ostream& os, const Datetime& rhs) {

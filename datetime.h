@@ -48,10 +48,14 @@ public:
     /// @return perc
     int getMinute() const { return minute; }
 
-    
     /// @brief Megállapítja egy évről, hogy az szökőév-e
     /// @return igen/nem
     bool isLeapYear() const;
+
+    /// @brief Megállapítja egy paraméterként kapott évről, hogy az szökőév-e
+    /// Ez csak a kompatibilitás megőrzése miatt tagfüggvény!
+    /// @return igen/nem
+    bool isLeapYear(int) const;
     
     /// @brief Megállapítja egy dátumról, hogy érvényes-e.
     /// @return igen/nem
