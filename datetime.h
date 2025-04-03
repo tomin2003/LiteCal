@@ -13,7 +13,6 @@ private:
     int day; ///< nap
     int hour; ///< óra
     int minute; ////< perc
-    static const int monthDays[12]; ///< adott hónapban a napok száma
     static const char* weekDays[7]; ///< a hét napjai
 public:
     /// @brief Default konstruktor
@@ -27,7 +26,7 @@ public:
     /// @param hour óra
     /// @param minute perc
     Datetime(int year, int month, int day, int hour, int minute) :year(year), month(month), day(day), hour(hour), minute(minute) {
-        if (!isValid()) throw std::invalid_argument("Érvénytelen dátum formátum!");
+        if (!isValid()) throw std::invalid_argument("Érvénytelen dátum!");
     }
 
     virtual ~Datetime() {}
@@ -51,15 +50,6 @@ public:
     /// @brief Getter függvény
     /// @return perc
     int getMinute() const { return minute; }
-
-    /// @brief Megállapítja egy évről, hogy az szökőév-e
-    /// @return igen/nem
-    bool isLeapYear() const;
-
-    /// @brief Megállapítja egy paraméterként kapott évről, hogy az szökőév-e
-    /// Ez csak a kompatibilitás megőrzése miatt tagfüggvény!
-    /// @return igen/nem
-    bool isLeapYear(int) const;
     
     /// @brief Megállapítja egy dátumról, hogy érvényes-e.
     /// @return igen/nem
@@ -68,6 +58,19 @@ public:
     /// @brief Egy dátum reprezentációja napokban
     /// @return 1970.01.01. (unix epoch) óta eltelt napok száma
     int dateInDays() const;
+
+    /// @brief Megállapítja egy évről, hogy az szökőév-e
+    /// @return igen/nem
+    bool isLeapYear() const;
+
+    /// @brief Megállapítja egy évről, hogy az szökőév-e
+    /// @param y év
+    /// @return igen/nem
+    bool isLeapYear(int y) const;
+
+    /// @brief Megállapítja, hány napos egy hónap.
+    /// @return napok száma
+    int daysInMonth() const;
 
     /// @brief Megállapítja, hogy egy dátum milyen napra esik.
     /// Ehhez a "Zeller's congruence" nevű algoritmust használtam. 
@@ -96,6 +99,8 @@ public:
     int operator-(const Datetime& rhs) const;
 };
 
+/// @brief Egy dátumot kiíró stream operátor
+/// @return output stream
 std::ostream& operator<<(std::ostream& os, const Datetime& rhs);
 
 #endif

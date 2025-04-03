@@ -7,9 +7,7 @@
 #include <stdexcept>
 #include <iomanip>
 
-/* Statikus adattag definíciók */
-
-const int Datetime::monthDays[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+/* Statikus adattag definíció */
 
 const char* Datetime::weekDays[7] = { {"Szombat"}, {"Vasarnap"}, {"Hetfo"}, {"Kedd"}, {"Szerda"}, {"Csutortok"}, {"Pentek"} };
 
@@ -25,13 +23,14 @@ bool Datetime::isLeapYear(int y) const {
     return (y % 400 == 0) || ((y % 4 == 0) && (y % 100 != 0));
 }
 
+int Datetime::daysInMonth() const {
+    const int monthDays[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    return (month == 2 && isLeapYear()) ? 29 : monthDays[month - 1];
+}
+
 bool Datetime::isValid() const {
-    if (year < 1970 || year > 2100 || month < 1 || month > 12 || 
-        hour < 0 || hour > 23 || minute < 0 || minute > 59) return false;
-    // nap ellenőrzés
-    int maxDays = monthDays[month - 1];
-    if (month == 2 && isLeapYear()) maxDays = 29;
-    return day >= 1 && day <= maxDays;
+    return (year >= 1970 && year <= 2100) && (month >= 1 && month <= 12) && 
+    (day >= 1 && day <= daysInMonth()) && (hour >= 0 && hour <= 23) && (minute >= 0 && minute <= 59);
 }
 
 const char* Datetime::getWeekDay() const {
@@ -55,12 +54,10 @@ const char* Datetime::getWeekDay() const {
 int Datetime::dateInDays() const {
     int days = day;
     for (int i = 0; i < month; i++) {
-        days += monthDays[i];
-        // Ha szökév van és február: +1 nap
-        if (isLeapYear() && i == 2-1) days++; 
+        days += daysInMonth();
     }
     for (int i = 1970; i < year; i++) {
-        // Itt van felhasználva a felüldefiniált isLeapYear(int)
+        // Itt van felhasználva a felüldefiniált isLeapYear(int) felhasználva
         days += (isLeapYear(i) ? 366 : 365);
     }
     return days;
@@ -88,14 +85,8 @@ bool Datetime::operator==(const Datetime& rhs) const {
     return year == rhs.year && month == rhs.month && day == rhs.day && hour == rhs.hour && minute == rhs.minute;
 }
 
-/* Felüldefiniált műveletek */
-
 int Datetime::operator-(const Datetime& rhs) const {
     return abs(dateInDays()-rhs.dateInDays());
-}
-
-bool isLeapYear(int year) {
-    return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
 }
 
 std::ostream& operator<<(std::ostream& os, const Datetime& rhs) {
