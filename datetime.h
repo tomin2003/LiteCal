@@ -30,6 +30,8 @@ public:
         if (!isValid()) throw std::invalid_argument("Érvénytelen dátum formátum!");
     }
 
+    virtual ~Datetime() {}
+
     /// @brief Getter függvény
     /// @return év
     int getYear() const { return year; }

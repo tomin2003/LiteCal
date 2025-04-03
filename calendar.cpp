@@ -8,8 +8,6 @@
 
 /* Konstruktorok */
 
-
-
 Calendar::Calendar(const Calendar& rhs) :nEvents(rhs.nEvents), events(new Event[nEvents]) {
     size_t i = 0;
     for (Event &e : *this) {

@@ -28,34 +28,22 @@ public:
     /// @brief Értékadó operátor
     /// @param rhs Új érték
     /// @return Megváltozott értékű objektum
-    Event& operator=(const Event& rhs) {
-        if (this != &rhs) {
-            evTime = rhs.evTime;
-            evDesc = rhs.evDesc;
-        }
-        return *this;
-    }
+    Event& operator=(const Event& rhs);
 
     /// @brief Esemény összehasonlítása dátum alapján
     /// @param rhs Összehasonlítás jobb oldala
     /// @return lhs frisebb dátumú-e mint rhs
-    bool operator>(const Event& rhs) {
-        return evTime > rhs.evTime;
-    }
+    bool operator>(const Event& rhs);
 
     /// @brief Esemény összehasonlítása dátum alapján
     /// @param rhs Összehasonlítás jobb oldala
     /// @return lhs régebbi dátumú-e mint rhs
-    bool operator<(const Event& rhs) {
-        return evTime < rhs.evTime;
-    }
+    bool operator<(const Event& rhs);
 
     /// @brief Két esemény megegyezősége
     /// @param rhs Összehasonlítás jobb oldala
     /// @return lhs és rhs megegyező dátumúak-e
-    bool operator==(const Event& rhs) {
-        return evTime == rhs.evTime;
-    }
+    bool operator==(const Event& rhs);
 };
 
 std::ostream& operator<<(std::ostream& os, const Event& rhs);
