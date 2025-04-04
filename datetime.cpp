@@ -23,19 +23,18 @@ bool Datetime::isLeapYear(int y) const {
     return (y % 400 == 0) || ((y % 4 == 0) && (y % 100 != 0));
 }
 
-int Datetime::daysInMonth() const {
+int Datetime::daysInMonth(int m) const {
     const int monthDays[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    return (month == 2 && isLeapYear()) ? 29 : monthDays[month - 1];
+    return (m == 2 && isLeapYear()) ? 29 : monthDays[m-1];
 }
 
 bool Datetime::isValid() const {
     return (year >= 1970 && year <= 2100) && (month >= 1 && month <= 12) && 
-    (day >= 1 && day <= daysInMonth()) && (hour >= 0 && hour <= 23) && (minute >= 0 && minute <= 59);
+    (day >= 1 && day <= daysInMonth(month)) && (hour >= 0 && hour <= 23) && (minute >= 0 && minute <= 59);
 }
 
 const char* Datetime::getWeekDay() const {
     // Zeller's Congruence
-    if (!isValid()) throw std::invalid_argument("Érvénytelen dátum!");
     size_t m = month; // hónap
     size_t y = year; // év
     // hónapok: 3 = március, 4 = április, ..., 14 = február 
@@ -53,8 +52,8 @@ const char* Datetime::getWeekDay() const {
 
 int Datetime::dateInDays() const {
     int days = day;
-    for (int i = 0; i < month; i++) {
-        days += daysInMonth();
+    for (int i = 1; i <= month; i++) {
+        days += daysInMonth(i);
     }
     for (int i = 1970; i < year; i++) {
         // Itt van felhasználva a felüldefiniált isLeapYear(int) felhasználva
@@ -81,13 +80,38 @@ bool Datetime::operator<(const Datetime& rhs) const {
     return minute > rhs.minute;
 }
 
+
 bool Datetime::operator==(const Datetime& rhs) const {
     return year == rhs.year && month == rhs.month && day == rhs.day && hour == rhs.hour && minute == rhs.minute;
+}
+
+bool Datetime::operator<=(const Datetime& rhs) const {
+    return (*this < rhs) || (*this == rhs);
+}
+
+bool Datetime::operator>=(const Datetime& rhs) const {
+    return (*this > rhs) || (*this == rhs);
+}
+
+Datetime Datetime::operator+(int rhs) const {
+    int y = year;
+    int m = month;
+    int d = day + rhs;
+    while (d > daysInMonth(m)) {
+        m++;
+        d -= daysInMonth(m);
+        if (m > 12) {
+            m = 1;
+            y++;
+        }
+    }
+    return Datetime(y, m, d, hour, minute);
 }
 
 int Datetime::operator-(const Datetime& rhs) const {
     return abs(dateInDays()-rhs.dateInDays());
 }
+
 
 std::ostream& operator<<(std::ostream& os, const Datetime& rhs) {
     os << rhs.getYear() << ". " << std::setfill('0') << std::setw(2) << rhs.getMonth() << ". " << std::setw(2) 

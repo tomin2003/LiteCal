@@ -70,7 +70,7 @@ public:
 
     /// @brief Megállapítja, hány napos egy hónap.
     /// @return napok száma
-    int daysInMonth() const;
+    int daysInMonth(int m) const;
 
     /// @brief Megállapítja, hogy egy dátum milyen napra esik.
     /// Ehhez a "Zeller's congruence" nevű algoritmust használtam. 
@@ -92,6 +92,21 @@ public:
     /// @param rhs összehasonlítás jobboldala
     /// @return lhs és rhs megegyező dátum és idő-e
     bool operator==(const Datetime& rhs) const;
+
+    /// @brief Két dátum és idő összehasonlítása
+    /// @param rhs összehasonlítás jobboldala
+    /// @return lhs frisebb dátum és idő-e mint rhs, vagy megegyeznek
+    bool operator>=(const Datetime& rhs) const;
+
+    /// @brief Két dátum és idő összehasonlítása
+    /// @param rhs összehasonlítás jobboldala
+    /// @return lhs régebbi dátum és idő-e mint rhs, vagy megegyeznek
+    bool operator<=(const Datetime& rhs) const;
+
+    /// @brief Milyen dátum lesz adott nap elteltével
+    /// @param day + hány nap
+    /// @return Az új dátum
+    Datetime operator+(int rhs) const;
 
     /// @brief Két dátum között eltelt napok száma
     /// @param rhs másik dátum
