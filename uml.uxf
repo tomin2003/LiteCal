@@ -1,60 +1,69 @@
 <diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Space for diagram note
 asa
-</help_text><element><id>UMLClass</id><coordinates><x>680</x><y>80</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
-Package::FatClass
-{Some Properties}
+</help_text><element><id>UMLClass</id><coordinates><x>850</x><y>73</y><w>210</w><h>210</h></coordinates><panel_attributes>&lt;&lt;Calendar&gt;&gt;
 --
--id: Long {composite}
-_-ClassAttribute: Long_
+#nEvents: size_t
+#events: Event*
 --
-#Operation(i: int): int
-/+AbstractOperation()/
++constructors
++virtual ~Calendar()
++getters
++operator=: const Calendar&amp;
++sort()
++find()
++display()
++iterator begin()
++iterator end()
++operator+, -</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>340</x><y>63</y><w>210</w><h>170</h></coordinates><panel_attributes>&lt;&lt;String&gt;&gt;
 --
-Responsibilities
--- Resp1
--- Resp2</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>170</x><y>70</y><w>210</w><h>100</h></coordinates><panel_attributes>&lt;&lt;String&gt;&gt;
+-len: size_t
+-pData: char*
 --
--size_t len
--char *pData
++constructors
++destructor 
++getters  
++operator=: const String&amp;
++operator[] (int): char / char&amp;  
++operator==, &lt;, &gt;, &lt;=, &gt;=(): bool  
++operator+, +=(): String / String&amp;  
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>73</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>123</y><w>110</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;140</additional_attributes></element><element><id>UMLClass</id><coordinates><x>720</x><y>403</y><w>210</w><h>70</h></coordinates><panel_attributes>&lt;&lt;MonthlyCalendar&gt;&gt;
 --
-#Operation(i: int): int
-/+AbstractOperation()/
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>370</x><y>80</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>370</x><y>90</y><w>110</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>550</x><y>410</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
-Package::FatClass
-{Some Properties}
+-selMonth: int
 --
--id: Long {composite}
-_-ClassAttribute: Long_
++display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>980</x><y>403</y><w>210</w><h>70</h></coordinates><panel_attributes>&lt;&lt;YearlyCalendar&gt;&gt;
 --
-#Operation(i: int): int
-/+AbstractOperation()/
+-selYear: int
 --
-Responsibilities
--- Resp1
--- Resp2</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>810</x><y>410</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
-Package::FatClass
-{Some Properties}
++display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>940</x><y>273</y><w>170</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;150;130</additional_attributes></element><element><id>Relation</id><coordinates><x>810</x><y>273</y><w>160</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>140;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>73</y><w>170</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Event&gt;&gt;
 --
--id: Long {composite}
-_-ClassAttribute: Long_
+-evDate: Date
+-evTime: Time
+-edDesc: String
 --
-#Operation(i: int): int
-/+AbstractOperation()/
++constructors  
++getters
++operator==, &lt;, &gt;, &lt;=, &gt;=   
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>790</x><y>93</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>340</x><y>243</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Date&gt;&gt;
 --
-Responsibilities
--- Resp1
--- Resp2</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>770</x><y>260</y><w>170</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;150;150</additional_attributes></element><element><id>Relation</id><coordinates><x>640</x><y>260</y><w>160</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>140;10;10;150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>460</x><y>80</y><w>170</w><h>70</h></coordinates><panel_attributes>SimpleClass</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>620</x><y>100</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>170</x><y>180</y><w>210</w><h>100</h></coordinates><panel_attributes>&lt;&lt;Date&gt;&gt;
+-year: int
+-month: int
+-day: int
+_-weekDays: const char*[7]_
 --
--size_t len
--char *pData
++constructors  
++getters  
++isValid(), isLeapYear()  
++operator==, &lt;, &gt;, &lt;=, &gt;=  
++operator+(), operator-()  
++getWeekDay(), daysInMonth()  </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>340</x><y>443</y><w>210</w><h>140</h></coordinates><panel_attributes>&lt;&lt;Time&gt;&gt;
 --
-#Operation(i: int): int
-/+AbstractOperation()/
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>170</x><y>290</y><w>210</w><h>100</h></coordinates><panel_attributes>&lt;&lt;Time&gt;&gt;
+-hour: int
+-minute: int
 --
--size_t len
--char *pData
---
-#Operation(i: int): int
-/+AbstractOperation()/
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>370</x><y>110</y><w>110</w><h>220</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;200</additional_attributes></element></diagram>
++constructors
++getters
++isValid()
++operator==, &lt;, &gt;, &lt;=, &gt;=  
++operator+(), operator-()  
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>183</y><w>110</w><h>300</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;280</additional_attributes></element></diagram>
