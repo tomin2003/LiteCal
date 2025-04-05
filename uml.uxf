@@ -9,12 +9,12 @@ asa
 +virtual ~Calendar()
 +getters
 +operator=: const Calendar&amp;
-+sort()
-+find()
-+display()
++sort(): void
++find(): Event&amp;
++display(): void
 +iterator begin()
 +iterator end()
-+operator+, -</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>60</y><w>210</w><h>170</h></coordinates><panel_attributes>&lt;&lt;String&gt;&gt;
++operator+, -(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>60</y><w>210</w><h>170</h></coordinates><panel_attributes>&lt;&lt;String&gt;&gt;
 --
 -len: size_t
 -pData: char*
@@ -22,7 +22,7 @@ asa
 +constructors
 +destructor 
 +getters  
-+operator=: const String&amp;
++operator=(): const String&amp;
 +operator[] (int): char / char&amp;  
 +operator==, &lt;, &gt;, &lt;=, &gt;=(): bool  
 +operator+, +=(): String / String&amp;  
@@ -35,16 +35,16 @@ asa
 --
 -selYear: int
 --
-+display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>270</y><w>290</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>270;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>70</y><w>170</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Event&gt;&gt;
++display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>270</y><w>290</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>270;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>70</y><w>180</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Event&gt;&gt;
 --
 -evDate: Date
 -evTime: Time
--edDesc: String
+-evDesc: String
 --
 +constructors  
 +getters
-+operator==, &lt;, &gt;, &lt;=, &gt;=   
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>90</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>240</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Date&gt;&gt;
++operator==, &lt;, &gt;, &lt;=, &gt;=(): bool   
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>690</x><y>90</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>240</y><w>210</w><h>200</h></coordinates><panel_attributes>&lt;&lt;Date&gt;&gt;
 --
 -year: int
 -month: int
@@ -53,17 +53,18 @@ _-weekDays: const char*[7]_
 --
 +constructors  
 +getters  
-+isValid(), isLeapYear()  
-+operator==, &lt;, &gt;, &lt;=, &gt;=  
-+operator+(), operator-()  
-+getWeekDay(), daysInMonth()  </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>440</y><w>210</w><h>140</h></coordinates><panel_attributes>&lt;&lt;Time&gt;&gt;
++isValid(), isLeapYear(): bool
++getWeekDay(): const char*
++daysInMonth(), dateInDays(): int
++operator==, &lt;, &gt;, &lt;=, &gt;= (): bool
++operator+(), operator-(): Date/int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>450</y><w>210</w><h>130</h></coordinates><panel_attributes>&lt;&lt;Time&gt;&gt;
 --
 -hour: int
 -minute: int
 --
 +constructors
 +getters
-+isValid()
-+operator==, &lt;, &gt;, &lt;=, &gt;=  
-+operator+(), operator-()  
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>180</y><w>110</w><h>300</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;280</additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>430</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>60;10;10;10</additional_attributes></element></diagram>
++isValid(): bool
++operator==, &lt;, &gt;, &lt;=, &gt;= (): bool 
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>180</y><w>110</w><h>310</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;290</additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>430</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>60;10;10;10</additional_attributes></element></diagram>
