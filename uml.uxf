@@ -1,14 +1,14 @@
 <diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Space for diagram note
 asa
-</help_text><element><id>UMLClass</id><coordinates><x>740</x><y>70</y><w>210</w><h>210</h></coordinates><panel_attributes>&lt;&lt;Calendar&gt;&gt;
+</help_text><element><id>UMLClass</id><coordinates><x>740</x><y>70</y><w>210</w><h>210</h></coordinates><panel_attributes>&lt;&lt;EventStore&gt;&gt;
 --
 #nEvents: size_t
 #events: Event*
 --
 +constructors
-+virtual ~Calendar()
++virtual ~EventStore()
 +getters
-+operator=: const Calendar&amp;
++operator=: const EventStore&amp;
 +sort(): void
 +find(): Event&amp;
 +display(): void
@@ -27,15 +27,15 @@ asa
 +operator==, &lt;, &gt;, &lt;=, &gt;=(): bool  
 +operator+, +=(): String / String&amp;  
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>70</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>120</y><w>110</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;140</additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>400</y><w>210</w><h>70</h></coordinates><panel_attributes>&lt;&lt;MonthlyCalendar&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>70</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>120</y><w>110</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;140</additional_attributes></element><element><id>UMLClass</id><coordinates><x>580</x><y>400</y><w>210</w><h>70</h></coordinates><panel_attributes>&lt;&lt;MonthlyCalendar&gt;&gt;
 --
 -selMonth: int
 --
-+display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>740</x><y>400</y><w>210</w><h>70</h></coordinates><panel_attributes>&lt;&lt;YearlyCalendar&gt;&gt;
++display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>870</x><y>400</y><w>210</w><h>70</h></coordinates><panel_attributes>&lt;&lt;YearlyCalendar&gt;&gt;
 --
 -selYear: int
 --
-+display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>270</y><w>290</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>270;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>70</y><w>180</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Event&gt;&gt;
++display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>670</x><y>270</y><w>190</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>170;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>70</y><w>180</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Event&gt;&gt;
 --
 -evDate: Date
 -evTime: Time
@@ -67,4 +67,4 @@ _-weekDays: const char*[7]_
 +getters
 +isValid(): bool
 +operator==, &lt;, &gt;, &lt;=, &gt;= (): bool 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>180</y><w>110</w><h>310</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;290</additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>430</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>60;10;10;10</additional_attributes></element></diagram>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>180</y><w>110</w><h>310</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;290</additional_attributes></element><element><id>Relation</id><coordinates><x>780</x><y>430</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element></diagram>
