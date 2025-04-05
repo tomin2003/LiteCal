@@ -4,22 +4,26 @@
 #define EVENT_H
 
 #include "string.h"
-#include "datetime.h"
+#include "date.h"
+#include "time.h"
 
 /// @class Event
-/// @brief Eseményekhez dátumot és időt, leírást párosító osztály
+/// @brief Eseményekhez dátumot, időt, és leírást párosító osztály
 class Event {
 private:
-    Datetime evTime; ///< Esemény ideje
+    Date evDate; ///< Esemény dátuma
+    Time evTime; ///< Esemény ideje
     String evDesc; ///< Esemény leírása
 public:
     /// @brief Default konstruktor
-    Event() :evTime(), evDesc() {}
+    Event() :evDate(), evTime(), evDesc() {}
 
     /// @brief Paraméteres konstruktor
-    /// @param Dt Dátum és idő objektum
+    /// @param  Dátum és idő objektum
     /// @param desc Leírás sztring objektum
-    Event(const Datetime& Dt, const String& desc) :evTime(Dt), evDesc(desc) {}
+    Event(const Date& evDate, const Time& evTime, const String& evDesc) :evDate(evDate), evTime(evTime), evDesc(evDesc) {}
+
+    Datetime getEvDate() const { return evDate; }
 
     Datetime getEvTime() const { return evTime; }
 

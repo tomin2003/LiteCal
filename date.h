@@ -1,35 +1,29 @@
-// date.h dátum és időkezelő osztály (deklarációk/inlineok) - 2025.03.31. SAXHSH
-#ifndef DATETIME_H
-#define DATETIME_H
+// date.h dátumkezelő osztály (deklarációk/inlineok) - SAXHSH
+#ifndef DATE_H
+#define DATE_H
 
 #include <iostream>
 
-/// @class Datetime
-/// @brief Dátumokat és időpontokat nyílvántartó osztály
-class Datetime {
+/// @class Date
+/// @brief Dátumokat nyílvántartó osztály
+class Date {
 private:
     int year; ///< év
     int month; ///< hónap
     int day; ///< nap
-    int hour; ///< óra
-    int minute; ////< perc
     static const char* weekDays[7]; ///< a hét napjai
 public:
     /// @brief Default konstruktor
-    /// Alapértelmezett dátum 1970.01.01. 00:00 (Unix time)
-    Datetime() :year(1970), month(1), day(1), hour(0), minute(0)  {}
+    /// Alapértelmezett dátum 1970.01.01. (Unix time)
+    Date() :year(1970), month(1), day(1) {}
 
     /// @brief Paraméteres konstruktor
     /// @param year év
     /// @param month hónap
     /// @param day nap
-    /// @param hour óra
-    /// @param minute perc
-    Datetime(int year, int month, int day, int hour, int minute) :year(year), month(month), day(day), hour(hour), minute(minute) {
+    Date(int year, int month, int day) :year(year), month(month), day(day) {
         if (!isValid()) throw std::invalid_argument("Érvénytelen dátum!");
     }
-
-    virtual ~Datetime() {}
 
     /// @brief Getter függvény
     /// @return év
@@ -43,14 +37,6 @@ public:
     /// @return nap
     int getDay() const { return day; }
 
-    /// @brief Getter függvény
-    /// @return óra
-    int getHour() const { return hour; }
-
-    /// @brief Getter függvény
-    /// @return perc
-    int getMinute() const { return minute; }
-    
     /// @brief Megállapítja egy dátumról, hogy érvényes-e.
     /// @return igen/nem
     bool isValid() const;
@@ -78,44 +64,44 @@ public:
     /// @return A hét egy adott napja
     const char* getWeekDay() const;
 
-    /// @brief Két dátum és idő összehasonlítása
-    /// @param rhs összehasonlítás jobboldalayy
-    /// @return lhs frisebb dátum és idő-e mint rhs
-    bool operator>(const Datetime& rhs) const;
+    /// @brief Két dátum összehasonlítása
+    /// @param rhs összehasonlítás jobboldala
+    /// @return lhs frisebb dátum-e mint rhs
+    bool operator>(const Date& rhs) const;
+
+    /// @brief Két dátum összehasonlítása
+    /// @param rhs összehasonlítás jobboldala
+    /// @return lhs régebbi dátum-e mint rhs
+    bool operator<(const Date& rhs) const;
 
     /// @brief Két dátum és idő összehasonlítása
     /// @param rhs összehasonlítás jobboldala
-    /// @return lhs régebbi dátum és idő-e mint rhs
-    bool operator<(const Datetime& rhs) const;
+    /// @return lhs és rhs megegyező dátum-e
+    bool operator==(const Date& rhs) const;
+
+    /// @brief Két dátum összehasonlítása
+    /// @param rhs összehasonlítás jobboldala
+    /// @return lhs frisebb dátum-e mint rhs, vagy megegyeznek
+    bool operator>=(const Date& rhs) const;
 
     /// @brief Két dátum és idő összehasonlítása
     /// @param rhs összehasonlítás jobboldala
-    /// @return lhs és rhs megegyező dátum és idő-e
-    bool operator==(const Datetime& rhs) const;
-
-    /// @brief Két dátum és idő összehasonlítása
-    /// @param rhs összehasonlítás jobboldala
-    /// @return lhs frisebb dátum és idő-e mint rhs, vagy megegyeznek
-    bool operator>=(const Datetime& rhs) const;
-
-    /// @brief Két dátum és idő összehasonlítása
-    /// @param rhs összehasonlítás jobboldala
-    /// @return lhs régebbi dátum és idő-e mint rhs, vagy megegyeznek
-    bool operator<=(const Datetime& rhs) const;
+    /// @return lhs régebbi dátum-e mint rhs, vagy megegyeznek
+    bool operator<=(const Date& rhs) const;
 
     /// @brief Milyen dátum lesz adott nap elteltével
     /// @param day + hány nap
     /// @return Az új dátum
-    Datetime operator+(int rhs) const;
+    Date operator+(int rhs) const;
 
     /// @brief Két dátum között eltelt napok száma
     /// @param rhs másik dátum
     /// @return eltelt napok száma
-    int operator-(const Datetime& rhs) const;
+    int operator-(const Date& rhs) const;
 };
 
 /// @brief Egy dátumot kiíró stream operátor
 /// @return output stream
-std::ostream& operator<<(std::ostream& os, const Datetime& rhs);
+std::ostream& operator<<(std::ostream& os, const Date& rhs);
 
 #endif

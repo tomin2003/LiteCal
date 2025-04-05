@@ -1,8 +1,8 @@
 # Változók
 CXX = g++
 CXXFLAGS = -pedantic -Wall -Werror -g -DMEMTRACE
-OBJ = string.o calendar.o datetime.o memtrace.o test.o
-HEADERS = string.h calendar.h event.h memtrace.h datetime.h
+OBJ = string.o calendar.o date.o time.o event.o memtrace.o test.o
+HEADERS = string.h calendar.h date.h time.h event.h memtrace.h datetime.h
 TARGET = test
 
 # Alapértelmezett

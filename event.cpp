@@ -11,13 +11,13 @@ Event& Event::operator=(const Event& rhs)  {
 }
 
 bool Event::operator>(const Event& rhs) {
-    return evTime > rhs.evTime;
+    return evDate > rhs.evDate;
 }
 
 bool Event::operator<(const Event& rhs) {
-    return evTime < rhs.evTime;
+    return evDate < rhs.evDate;
 }
 
 bool Event::operator==(const Event& rhs) {
-    return evTime == rhs.evTime;
+    return evDate == rhs.evDate;
 }

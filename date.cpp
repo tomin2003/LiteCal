@@ -1,6 +1,6 @@
-// datetime.cpp dátum és időkezelő osztály (definíciók) - 2025.03.31. SAXHSH
+// Date.cpp dátum és időkezelő osztály (definíciók) - 2025.03.31. SAXHSH
 
-#include "datetime.h"
+#include "date.h"
 #include <iostream>
 #include <cstddef>
 #include <cmath>
@@ -9,31 +9,31 @@
 
 /* Statikus adattag definíció */
 
-const char* Datetime::weekDays[7] = { {"Szombat"}, {"Vasarnap"}, {"Hetfo"}, {"Kedd"}, {"Szerda"}, {"Csutortok"}, {"Pentek"} };
+const char* Date::weekDays[7] = { {"Szombat"}, {"Vasarnap"}, {"Hetfo"}, {"Kedd"}, {"Szerda"}, {"Csutortok"}, {"Pentek"} };
 
 /* Getterek definíciója a headerben */
 
 /* Belső információkat megállapító függvények */
 
-bool Datetime::isLeapYear() const {
+bool Date::isLeapYear() const {
     return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
 }
 
-bool Datetime::isLeapYear(int y) const {
+bool Date::isLeapYear(int y) const {
     return (y % 400 == 0) || ((y % 4 == 0) && (y % 100 != 0));
 }
 
-int Datetime::daysInMonth(int m) const {
+int Date::daysInMonth(int m) const {
     const int monthDays[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     return (m == 2 && isLeapYear()) ? 29 : monthDays[m-1];
 }
 
-bool Datetime::isValid() const {
+bool Date::isValid() const {
     return (year >= 1970 && year <= 2100) && (month >= 1 && month <= 12) && 
-    (day >= 1 && day <= daysInMonth(month)) && (hour >= 0 && hour <= 23) && (minute >= 0 && minute <= 59);
+    (day >= 1 && day <= daysInMonth(month));
 }
 
-const char* Datetime::getWeekDay() const {
+const char* Date::getWeekDay() const {
     // Zeller's Congruence
     size_t m = month; // hónap
     size_t y = year; // év
@@ -50,7 +50,7 @@ const char* Datetime::getWeekDay() const {
     return weekDays[h];
 }
 
-int Datetime::dateInDays() const {
+int Date::dateInDays() const {
     int days = day;
     for (int i = 1; i <= month; i++) {
         days += daysInMonth(i);
@@ -64,36 +64,32 @@ int Datetime::dateInDays() const {
 
 /* Logikai összehasonlítások */
 
-bool Datetime::operator>(const Datetime& rhs) const {
+bool Date::operator>(const Date& rhs) const {
     if (year != rhs.year) return year > rhs.year;
     if (month != rhs.month) return month > rhs.month;
-    if (day != rhs.day) return day > rhs.day;
-    if (hour != rhs.hour) return hour > rhs.hour;
-    return minute > rhs.minute;
+    return day > rhs.day;
 }
 
-bool Datetime::operator<(const Datetime& rhs) const {
+bool Date::operator<(const Date& rhs) const {
     if (year != rhs.year) return year < rhs.year;
     if (month != rhs.month) return month < rhs.month;
-    if (day != rhs.day) return day < rhs.day;
-    if (hour != rhs.hour) return hour < rhs.hour;
-    return minute > rhs.minute;
+    return day < rhs.day;
 }
 
 
-bool Datetime::operator==(const Datetime& rhs) const {
-    return year == rhs.year && month == rhs.month && day == rhs.day && hour == rhs.hour && minute == rhs.minute;
+bool Date::operator==(const Date& rhs) const {
+    return year == rhs.year && month == rhs.month && day == rhs.day;
 }
 
-bool Datetime::operator<=(const Datetime& rhs) const {
+bool Date::operator<=(const Date& rhs) const {
     return (*this < rhs) || (*this == rhs);
 }
 
-bool Datetime::operator>=(const Datetime& rhs) const {
+bool Date::operator>=(const Date& rhs) const {
     return (*this > rhs) || (*this == rhs);
 }
 
-Datetime Datetime::operator+(int rhs) const {
+Date Date::operator+(int rhs) const {
     int y = year;
     int m = month;
     int d = day + rhs;
@@ -105,16 +101,15 @@ Datetime Datetime::operator+(int rhs) const {
             y++;
         }
     }
-    return Datetime(y, m, d, hour, minute);
+    return Date(y, m, d);
 }
 
-int Datetime::operator-(const Datetime& rhs) const {
+int Date::operator-(const Date& rhs) const {
     return abs(dateInDays()-rhs.dateInDays());
 }
 
 
-std::ostream& operator<<(std::ostream& os, const Datetime& rhs) {
-    os << rhs.getYear() << ". " << std::setfill('0') << std::setw(2) << rhs.getMonth() << ". " << std::setw(2) 
-    << rhs.getDay() << ". " << std::setw(2) << rhs.getHour() << ':' << std::setw(2) << rhs.getMinute();
+std::ostream& operator<<(std::ostream& os, const Date& rhs) {
+    os << rhs.getYear() << ". " << std::setfill('0') << std::setw(2) << rhs.getMonth() << ". " << std::setw(2) << rhs.getDay();
     return os;
 }
