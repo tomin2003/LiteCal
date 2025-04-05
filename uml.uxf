@@ -1,6 +1,6 @@
 <diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Space for diagram note
 asa
-</help_text><element><id>UMLClass</id><coordinates><x>850</x><y>73</y><w>210</w><h>210</h></coordinates><panel_attributes>&lt;&lt;Calendar&gt;&gt;
+</help_text><element><id>UMLClass</id><coordinates><x>740</x><y>70</y><w>210</w><h>210</h></coordinates><panel_attributes>&lt;&lt;Calendar&gt;&gt;
 --
 #nEvents: size_t
 #events: Event*
@@ -14,7 +14,7 @@ asa
 +display()
 +iterator begin()
 +iterator end()
-+operator+, -</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>340</x><y>63</y><w>210</w><h>170</h></coordinates><panel_attributes>&lt;&lt;String&gt;&gt;
++operator+, -</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>60</y><w>210</w><h>170</h></coordinates><panel_attributes>&lt;&lt;String&gt;&gt;
 --
 -len: size_t
 -pData: char*
@@ -27,15 +27,15 @@ asa
 +operator==, &lt;, &gt;, &lt;=, &gt;=(): bool  
 +operator+, +=(): String / String&amp;  
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>73</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>123</y><w>110</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;140</additional_attributes></element><element><id>UMLClass</id><coordinates><x>720</x><y>403</y><w>210</w><h>70</h></coordinates><panel_attributes>&lt;&lt;MonthlyCalendar&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>70</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>120</y><w>110</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;140</additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>400</y><w>210</w><h>70</h></coordinates><panel_attributes>&lt;&lt;MonthlyCalendar&gt;&gt;
 --
 -selMonth: int
 --
-+display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>980</x><y>403</y><w>210</w><h>70</h></coordinates><panel_attributes>&lt;&lt;YearlyCalendar&gt;&gt;
++display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>740</x><y>400</y><w>210</w><h>70</h></coordinates><panel_attributes>&lt;&lt;YearlyCalendar&gt;&gt;
 --
 -selYear: int
 --
-+display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>940</x><y>273</y><w>170</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;150;130</additional_attributes></element><element><id>Relation</id><coordinates><x>810</x><y>273</y><w>160</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>140;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>73</y><w>170</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Event&gt;&gt;
++display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>570</x><y>270</y><w>290</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>270;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>70</y><w>170</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Event&gt;&gt;
 --
 -evDate: Date
 -evTime: Time
@@ -44,7 +44,7 @@ asa
 +constructors  
 +getters
 +operator==, &lt;, &gt;, &lt;=, &gt;=   
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>790</x><y>93</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>340</x><y>243</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Date&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>90</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>240</y><w>210</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Date&gt;&gt;
 --
 -year: int
 -month: int
@@ -56,7 +56,7 @@ _-weekDays: const char*[7]_
 +isValid(), isLeapYear()  
 +operator==, &lt;, &gt;, &lt;=, &gt;=  
 +operator+(), operator-()  
-+getWeekDay(), daysInMonth()  </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>340</x><y>443</y><w>210</w><h>140</h></coordinates><panel_attributes>&lt;&lt;Time&gt;&gt;
++getWeekDay(), daysInMonth()  </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>440</y><w>210</w><h>140</h></coordinates><panel_attributes>&lt;&lt;Time&gt;&gt;
 --
 -hour: int
 -minute: int
@@ -66,4 +66,4 @@ _-weekDays: const char*[7]_
 +isValid()
 +operator==, &lt;, &gt;, &lt;=, &gt;=  
 +operator+(), operator-()  
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>183</y><w>110</w><h>300</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;280</additional_attributes></element></diagram>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>180</y><w>110</w><h>300</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;280</additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>430</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>60;10;10;10</additional_attributes></element></diagram>
