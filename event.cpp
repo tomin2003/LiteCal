@@ -11,15 +11,15 @@ Event& Event::operator=(const Event& rhs)  {
 }
 
 bool Event::operator>(const Event& rhs) {
-    return evDate > rhs.evDate;
+    return evDate > rhs.evDate && evTime > rhs.evTime;
 }
 
 bool Event::operator<(const Event& rhs) {
-    return evDate < rhs.evDate;
+    return evDate < rhs.evDate && evTime < rhs.evTime;
 }
 
 bool Event::operator==(const Event& rhs) {
-    return evDate == rhs.evDate;
+    return evDate == rhs.evDate && evTime == rhs.evTime;
 }
 
 std::ostream& operator<<(std::ostream& os, const Event& rhs) {
