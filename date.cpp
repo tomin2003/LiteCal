@@ -110,6 +110,6 @@ int Date::operator-(const Date& rhs) const {
 
 
 std::ostream& operator<<(std::ostream& os, const Date& rhs) {
-    os << rhs.getYear() << ". " << std::setfill('0') << std::setw(2) << rhs.getMonth() << ". " << std::setw(2) << rhs.getDay();
+    os << rhs.getYear() << ". " << std::setfill('0') << std::setw(2) << rhs.getMonth() << ". " << std::setw(2) << rhs.getDay() << '.';
     return os;
 }

@@ -3,6 +3,7 @@
 #define DATE_H
 
 #include <iostream>
+#include "except.h"
 
 /// @class Date
 /// @brief Dátumokat nyílvántartó osztály
@@ -18,11 +19,12 @@ public:
     Date() :year(1970), month(1), day(1) {}
 
     /// @brief Paraméteres konstruktor
+    /// Érvényesség ellenőrzéssel
     /// @param year év
     /// @param month hónap
     /// @param day nap
     Date(int year, int month, int day) :year(year), month(month), day(day) {
-        if (!isValid()) throw std::invalid_argument("Érvénytelen dátum!");
+        if (!isValid()) throw invalid_date("Érvénytelen dátum!");
     }
 
     /// @brief Getter függvény
@@ -74,7 +76,7 @@ public:
     /// @return lhs régebbi dátum-e mint rhs
     bool operator<(const Date& rhs) const;
 
-    /// @brief Két dátum és idő összehasonlítása
+    /// @brief Két dátum összehasonlítása
     /// @param rhs összehasonlítás jobboldala
     /// @return lhs és rhs megegyező dátum-e
     bool operator==(const Date& rhs) const;
@@ -84,7 +86,7 @@ public:
     /// @return lhs frisebb dátum-e mint rhs, vagy megegyeznek
     bool operator>=(const Date& rhs) const;
 
-    /// @brief Két dátum és idő összehasonlítása
+    /// @brief Két dátum összehasonlítása
     /// @param rhs összehasonlítás jobboldala
     /// @return lhs régebbi dátum-e mint rhs, vagy megegyeznek
     bool operator<=(const Date& rhs) const;
@@ -101,7 +103,7 @@ public:
 };
 
 /// @brief Egy dátumot kiíró stream operátor
-/// @return output stream
+/// @return output stream (ÉÉÉÉ. HH. NN.)
 std::ostream& operator<<(std::ostream& os, const Date& rhs);
 
 #endif
