@@ -5,32 +5,33 @@
 
 #include "event.h"
 #include "string.h"
-#include "datetime.h"
+#include "date.h"
+#include "time.h"
 
-/// @class Calendar
+/// @class EventStore
 /// A többi (éves, havi) naptár alaposztálya
-class Calendar {
+class EventStore {
 private:
     size_t nEvents; ///< események száma
     Event *events; ///< események dinamikus tömbje
 public:
 /// @brief Default konstruktor
-    Calendar() : nEvents(0), events(new Event[0]) {}
+    EventStore() : nEvents(0), events(new Event[0]) {}
     
     /// @brief Paraméteres konstruktor
     /// @param event Egy esemény
-    Calendar(const Event& event);
+    EventStore(const Event& event);
 
     /// @brief Másoló konstruktor
     /// @param rhs Másolt objektum
-    Calendar(const Calendar& rhs);
+    EventStore(const EventStore& rhs);
     
     /// @brief Értékadó operátor
     /// @param rhs Átadott érték
-    Calendar& operator=(const Calendar& rhs);
+    EventStore& operator=(const EventStore& rhs);
 
     /// @brief Destruktor (virtuális)
-    virtual ~Calendar() { 
+    virtual ~EventStore() { 
         delete[] events;
     }
 
@@ -59,19 +60,21 @@ public:
     //virtual void printCalendar();
 };
 
-class monthlyCalendar : public Calendar {
-    private:
-        int selMonth;
-    public:
-        monthlyCalendar(int selMonth) :selMonth(selMonth) {}
-        void printCalendar();
-    };
-    
-class yearlyCalendar : public Calendar {
+class MonthlyCalendar :public EventStore {
 private:
+    int selMonth;
+public:
+    MonthlyCalendar() :selMonth(0) {}
+    MonthlyCalendar(int selMonth) :selMonth(selMonth) {}
+    void printCalendar();
+};
+    
+class YearlyCalendar :public EventStore {
+private:
+    MonthlyCalendar m[12];
     int selYear;
 public:
-    yearlyCalendar(int selYear) :selYear(selYear) {}
+    YearlyCalendar(int selYear) :selYear(selYear) {}
     void printCalendar();
 };
 
