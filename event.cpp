@@ -21,3 +21,8 @@ bool Event::operator<(const Event& rhs) {
 bool Event::operator==(const Event& rhs) {
     return evDate == rhs.evDate;
 }
+
+std::ostream& operator<<(std::ostream& os, const Event& rhs) {
+    os << rhs.getEvDate() << ' ' << rhs.getEvTime() << " - " << rhs.getEvDesc();
+    return os;
+}

@@ -19,14 +19,30 @@ public:
     Event() :evDate(), evTime(), evDesc() {}
 
     /// @brief Paraméteres konstruktor
-    /// @param  Dátum és idő objektum
+    /// @param evDate Dátum objektum
+    /// @param evTime Idő objektum
     /// @param desc Leírás sztring objektum
     Event(const Date& evDate, const Time& evTime, const String& evDesc) :evDate(evDate), evTime(evTime), evDesc(evDesc) {}
 
-    Datetime getEvDate() const { return evDate; }
+    /// @brief Paraméteres konstruktor
+    /// @param y Év
+    /// @param mo Hónap
+    /// @param d Nap
+    /// @param h Óra
+    /// @param mi Perc
+    /// @param s C-sztring leírás
+    Event(int y, int mo, int d, int h, int mi, const char* s) :evDate(y, mo, d), evTime(h, mi), evDesc(s) {}
 
-    Datetime getEvTime() const { return evTime; }
+    /// @brief Getter függvény
+    /// @return Dátum objektum
+    Date getEvDate() const { return evDate; }
 
+    /// @brief Getter függvény
+    /// @return Idő objektum
+    Time getEvTime() const { return evTime; }
+
+    /// @brief Getter függvény
+    /// @return String objektum
     String getEvDesc() const { return evDesc; }
 
     /// @brief Értékadó operátor
