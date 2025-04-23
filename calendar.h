@@ -1,4 +1,5 @@
 // calendar.h naptárkezelő osztály (deklarációk, inlineok) - 2025.03.31. SAXHSH
+#define IGNORE -1
 
 #ifndef CALENDAR_H
 #define CALENDAR_H
@@ -8,19 +9,20 @@
 #include "date.h"
 #include "time.h"
 
+
 /// @class EventStore
 /// A többi (éves, havi) naptár alaposztálya
 class EventStore {
-private:
+protected:
     size_t nEvents; ///< események száma
     Event *events; ///< események dinamikus tömbje
 public:
 /// @brief Default konstruktor
-    EventStore() : nEvents(0), events(new Event[0]) {}
+    EventStore() :nEvents(0), events(new Event[0]) {}
     
     /// @brief Paraméteres konstruktor
     /// @param event Egy esemény
-    EventStore(const Event& event);
+    EventStore(const Event& event) :nEvents(1), events(new Event[1]) { events[0] = event; }
 
     /// @brief Másoló konstruktor
     /// @param rhs Másolt objektum
@@ -34,6 +36,28 @@ public:
     virtual ~EventStore() { 
         delete[] events;
     }
+
+    /// @brief Getter függvény  
+    /// @return Tároló
+    Event* getEvents() { return events; }
+    
+    /// @brief Getter függvény
+    /// @return Tárolt semények száma
+    size_t getNEvents() { return nEvents; };
+
+    /// @brief Az események listájához hozzáfűz egy új eseményt.
+    /// @param rhs A hozzáfűzött esemény
+    void operator+(const Event& rhs);
+
+    /// @brief Az események listájából töröl egy specifikus eseményt.
+    /// @param rhs A törtlendő esemény
+    void operator-(const Event& rhs);
+    
+    /// @brief Az események listájt dátum szerint csökkenő sorrendbe rendezi.
+    /// Ehhez az std::sort() STL függvényt használja.
+    void sort();
+    
+    size_t find(int year = IGNORE, int month = IGNORE, int day = IGNORE, int hour = IGNORE, int minute = IGNORE, String str = IGNORE);
 
     /// @brief Iterátor kezdete
     /// @return Első esemény pointer
@@ -50,22 +74,21 @@ public:
     /// @brief Iterátor vége
     /// @brief Utolsó esemény utáni pointer
     const Event *end() const { return events + nEvents; }
-
-    /// @brief Az eseményeket sorba rendező függvény
-    /// A standard library sort függvényét alkalmazza az események tömbjére.
-    void sort();
-    
-    /// @brief Naptárt kiíró függvény
-    /// A származtatott naptárosztályok használják
-    //virtual void printCalendar();
 };
+
+/// @brief Az eseményeket kiíró operátor
+/// @param os output stream
+/// @param rhs eseménytömb
+/// @return output stream
+std::ostream& operator<<(std::ostream& os, const EventStore &rhs);
 
 class MonthlyCalendar :public EventStore {
 private:
     int selMonth;
 public:
-    MonthlyCalendar() :selMonth(0) {}
-    MonthlyCalendar(int selMonth) :selMonth(selMonth) {}
+    /// @brief Paraméteres konstruktor
+    /// @param selMonth kiválasztott hónap (default = 1)
+    MonthlyCalendar(int selMonth = 1) :selMonth(selMonth) {}
     void printCalendar();
 };
     
@@ -74,7 +97,9 @@ private:
     MonthlyCalendar m[12];
     int selYear;
 public:
-    YearlyCalendar(int selYear) :selYear(selYear) {}
+    /// @brief Paraméteres konstruktor
+    /// @param selMonth kiválasztott év (default = 1970)
+    YearlyCalendar(int selYear = 1970) :selYear(selYear) {}
     void printCalendar();
 };
 

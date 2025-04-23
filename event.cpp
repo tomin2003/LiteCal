@@ -1,9 +1,10 @@
-// event.cpp eseménykezelő osztály (definíciók) - 2025.04.03. SAXHSH
+// event.cpp eseménykezelő osztály (definíciók) - SAXHSH
 
 #include "event.h"
 
 Event& Event::operator=(const Event& rhs)  {
     if (this != &rhs) {
+        evDate = rhs.evDate;
         evTime = rhs.evTime;
         evDesc = rhs.evDesc;
     }
