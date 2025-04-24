@@ -1,4 +1,4 @@
-// calendar.cpp naptárkezelő osztály (definíciók) - 2025.03.31. SAXHSH
+// calendar.cpp naptárkezelő osztály (definíciók) - SAXHSH
 
 #include "calendar.h"
 #include "event.h"

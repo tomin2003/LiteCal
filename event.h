@@ -1,4 +1,4 @@
-// event.h eseménykezelő osztály (deklarációk/inlineok) - 2025.03.31. SAXHSH
+// event.h eseménykezelő osztály (deklarációk/inlineok) - SAXHSH
 
 #ifndef EVENT_H
 #define EVENT_H

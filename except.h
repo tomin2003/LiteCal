@@ -1,3 +1,5 @@
+// except.h kivételkezelő osztályok - SAXHSH
+
 #ifndef EXCEPT_H
 #define EXCEPT_H
 

@@ -1,4 +1,4 @@
-// calendar.h naptárkezelő osztály (deklarációk, inlineok) - 2025.03.31. SAXHSH
+// calendar.h naptárkezelő osztály (deklarációk, inlineok) - SAXHSH
 #define IGNORE -1
 
 #ifndef CALENDAR_H
