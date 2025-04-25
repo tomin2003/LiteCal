@@ -8,7 +8,7 @@
 #include "except.h"
 #include <algorithm>
 
-/* Másoló konstruktor */
+/*Másoló konstruktor*/
 
 EventStore::EventStore(const EventStore& rhs): nEvents(rhs.nEvents), events(new Event[nEvents]) {
     for (size_t i = 0; i < nEvents; i++) {
@@ -16,7 +16,7 @@ EventStore::EventStore(const EventStore& rhs): nEvents(rhs.nEvents), events(new 
     }
 }
 
-/* Értékadó operátor */
+/*Értékadó operátor*/
 
 EventStore& EventStore::operator=(const EventStore& rhs) {
     if (this != &rhs) {
@@ -31,6 +31,8 @@ EventStore& EventStore::operator=(const EventStore& rhs) {
     return *this;
 }
 
+/*Indexelő operátorok*/
+
 Event& EventStore::operator[](int i) {
     if (i < 0 || i >= static_cast<int>(nEvents)) throw std::out_of_range ("Túlindexelted az eseménytárolót!");
     return events[i];
@@ -40,6 +42,8 @@ Event EventStore::operator[](int i) const {
     if (i < 0 || i >= static_cast<int>(nEvents)) throw std::out_of_range ("Túlindexelted az eseménytárolót!");
     return events[i];
 }
+
+/*Keresés*/
 
 Event& EventStore::find(const Event& searchCrit) {
     auto it = std::find(this->begin(), this->end(), searchCrit);
@@ -53,6 +57,8 @@ const Event& EventStore::find(const Event& searchCrit) const {
    return *it;
 }
 
+/*Eseményütközés*/
+
 void EventStore::eventClash(const Event& checked) const {
     for (const Event &e : *this) {
         if (e.getEvDate() == checked.getEvDate() && e.getEvTime() == checked.getEvTime()) {
@@ -60,6 +66,8 @@ void EventStore::eventClash(const Event& checked) const {
         }
     }
 }
+
+/*Hozzáfűzés, kitörlés*/
 
 EventStore& EventStore::operator+(const Event& rhs) {
     eventClash(rhs);
@@ -89,9 +97,13 @@ EventStore& EventStore::operator-(const Event& rhs) {
     return *this;
 }
 
+/*Rendezés*/
+
 void EventStore::sort() {
     std::sort(this->begin(), this->end());
 }
+
+/*Stream operátor*/
 
 std::ostream& operator<<(std::ostream& os, const EventStore& rhs) {
     for (const Event &e : rhs) {
