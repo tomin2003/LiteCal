@@ -33,8 +33,9 @@ String& String::operator=(const String& rhs) {
 
 String String::operator+(const String& rhs) const {
     String newStr;
-    newStr.len = len+rhs.len;
-    newStr.pData = new char[newStr.len+1];
+    newStr.len = len + rhs.len;
+    delete[] newStr.pData;
+    newStr.pData = new char[newStr.len + 1];
     strcpy(newStr.pData, pData);
     strcat(newStr.pData, rhs.pData);
     return newStr;
@@ -42,10 +43,12 @@ String String::operator+(const String& rhs) const {
 
 String String::operator+(char c) const {
     String newStr;
-    newStr.len = len+1;
-    newStr.pData = new char[newStr.len+1];
+    newStr.len = len + 1;
+    delete[] newStr.pData;
+    newStr.pData = new char[newStr.len + 1];
     strcpy(newStr.pData, pData);
-    strcat(newStr.pData, String(c).pData);
+    newStr.pData[len] = c;
+    newStr.pData[len + 1] = '\0';
     return newStr;
 }
 
@@ -58,12 +61,12 @@ String& String::operator+=(char c) {
 }
 
 char& String::operator[](int i) {
-    if (i < 0 || i >= (int)len) throw std::out_of_range ("Túlindexelted a sztringet!");
+    if (i < 0 || i >= static_cast<int>(len)) throw std::out_of_range ("Túlindexelted a sztringet!");
     return pData[i];
 }
 
 char String::operator[](int i) const {
-    if (i < 0 || i >= (int)len) throw std::out_of_range ("Túlindexelted a sztringet!");
+    if (i < 0 || i >= static_cast<int>(len)) throw std::out_of_range ("Túlindexelted a sztringet!");
     return pData[i];
 }
 

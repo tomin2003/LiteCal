@@ -39,6 +39,20 @@ public:
     /// @return nap
     int getDay() const { return day; }
 
+    /*Megjegyzés: a settereknél a konstruktort újrafuttatom, hogy megmaradjon a hibaellenőrzés az új dátumokra.*/
+
+    /// @brief Setter függvény
+    /// @param év
+    void setYear(int y) { *this = Date(y, month, day); }
+
+    /// @brief Setter függvény
+    /// @param hónap
+    void setMonth(int m) { *this = Date(year, m, day); }
+
+    /// @brief Setter függvény
+    /// @param nap
+    void setDay(int d) { *this = Date(year, month, d); }
+
     /// @brief Megállapítja egy dátumról, hogy érvényes-e.
     /// @return igen/nem
     bool isValid() const;
@@ -105,5 +119,9 @@ public:
 /// @brief Egy dátumot kiíró stream operátor
 /// @return output stream (ÉÉÉÉ. HH. NN.)
 std::ostream& operator<<(std::ostream& os, const Date& rhs);
+
+/// @brief Egy dátumot beolvasó stream operátor (ÉÉÉÉ. HH. NN.)
+/// @return input stream 
+std::istream& operator>>(std::istream& is, Date& rhs);
 
 #endif

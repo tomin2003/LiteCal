@@ -45,6 +45,18 @@ public:
     /// @return String objektum
     String getEvDesc() const { return evDesc; }
 
+    /// @brief Setter függvény
+    /// @param date dátum
+    void setEvDate(Date date) { evDate = date; }
+
+    /// @brief Setter függvény
+    /// @param time időpont
+    void setEvTime(Time time) { evTime = time; }
+
+    /// @brief Setter függvény
+    /// @param desc leírás
+    void setEvDesc(String desc) { evDesc = desc; }
+
     /// @brief Értékadó operátor
     /// @param rhs Új érték
     /// @return Megváltozott értékű objektum
@@ -64,8 +76,19 @@ public:
     /// @param rhs Összehasonlítás jobb oldala
     /// @return lhs és rhs megegyező dátumúak-e
     bool operator==(const Event& rhs);
+
+    /// @brief Két esemény megegyezősége
+    /// @param rhs Összehasonlítás jobb oldala
+    /// @return lhs és rhs megegyező dátumúak-e
+    const bool operator==(const Event& rhs) const;
 };
 
+/// @brief Egy eseményt kiíró stream operátor.
+/// @return Output stream (ÉÉÉÉ. HH. NN. ÓÓ:PP - LEÍRÁS)
 std::ostream& operator<<(std::ostream& os, const Event& rhs);
+
+/// @brief Egy eseményt beolvasó stream operátor. (ÉÉÉÉ. HH. NN. ÓÓ:PP - LEÍRÁS)
+/// @return Input stream 
+std::istream& operator>>(std::istream& is, Event& rhs);
 
 #endif
