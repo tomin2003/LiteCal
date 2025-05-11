@@ -1,4 +1,4 @@
-// time.cpp időkezelő osztály (definíciók) - 2025.04.08. SAXHSH
+// time.cpp időkezelő osztály (definíciók) - SAXHSH
 
 #include "time.h"
 #include <iostream>

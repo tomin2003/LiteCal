@@ -1,4 +1,4 @@
-// time.h időkezelő osztály (deklarációk/inlineok) - 2025.04.05. SAXHSH
+// time.h időkezelő osztály (deklarációk/inlineok) - SAXHSH
 
 #ifndef TIME_H
 #define TIME_H

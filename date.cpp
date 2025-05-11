@@ -9,7 +9,7 @@
 
 /* Statikus adattag definíció */
 
-const char* Date::weekDays[7] = { {"Szombat"}, {"Vasarnap"}, {"Hetfo"}, {"Kedd"}, {"Szerda"}, {"Csutortok"}, {"Pentek"} };
+const char* Date::weekDays[7] = { "Szombat", "Vasarnap", "Hetfo", "Kedd", "Szerda", "Csutortok", "Pentek" };
 
 /* Getterek definíciója a headerben */
 

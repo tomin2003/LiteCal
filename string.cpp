@@ -1,4 +1,4 @@
-// string.cpp dinamikus sztringkezelő osztály (definíciók) - 2025.03.28. SAXHSH
+// string.cpp dinamikus sztringkezelő osztály (definíciók) - SAXHSH
 #include "string.h"
 #include "memtrace.h"
 #include <iostream>
