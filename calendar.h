@@ -124,24 +124,34 @@ std::ostream& operator<<(std::ostream& os, const EventStore &rhs);
 // Ennek a résznek az implementációja még változhat, ez majd a felhasználói felületre lesz leginkább hatással
 // | | | 
 // v v v 
-class MonthlyCalendar :public EventStore {
+class YearlyCalendar :public EventStore {
 private:
-    int selMonth;
+    int selYear; ///< kiválasztott év
 public:
+    /// @brief Default konstruktor
+    YearlyCalendar(): selYear(1970) {}
+
     /// @brief Paraméteres konstruktor
-    /// @param selMonth kiválasztott hónap (default = 1)
-    MonthlyCalendar(int selMonth = 1) :selMonth(selMonth) {}
+    /// @param src forrástároló
+    /// @param selMonth kiválasztott év (default = 1970)
+    YearlyCalendar(const EventStore& src, int selYear = 1970) :EventStore(src.filterBy(selYear)), selYear(selYear) {}
     void printCalendar();
 };
 
-class YearlyCalendar :public EventStore {
+class MonthlyCalendar :public EventStore {
 private:
-    MonthlyCalendar m[12];
-    int selYear;
+    int selYear; ///< kiválasztott év
+    int selMonth; ///< kiválasztott hónap
 public:
+    /// @brief Default konstruktor
+    MonthlyCalendar(): selYear(1970), selMonth(1) {}
+
     /// @brief Paraméteres konstruktor
-    /// @param selMonth kiválasztott év (default = 1970)
-    YearlyCalendar(int selYear = 1970) :selYear(selYear) {}
+    /// @param src forrástároló
+    /// @param selYear kiválasztott év (default = 1970)
+    /// @param selMonth kiválasztott hónap (default = 1)
+    MonthlyCalendar(const EventStore& src, int selYear = 1970, int selMonth = 1) 
+                    :EventStore(src.filterBy(selYear, selMonth)), selYear(selYear), selMonth(selMonth) {}
     void printCalendar();
 };
 

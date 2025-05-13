@@ -1,6 +1,6 @@
 <diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Space for diagram note
 asa
-</help_text><element><id>UMLClass</id><coordinates><x>740</x><y>70</y><w>210</w><h>210</h></coordinates><panel_attributes>&lt;&lt;EventStore&gt;&gt;
+</help_text><element><id>UMLClass</id><coordinates><x>740</x><y>70</y><w>210</w><h>230</h></coordinates><panel_attributes>&lt;&lt;EventStore&gt;&gt;
 --
 #nEvents: size_t
 #events: Event*
@@ -10,6 +10,7 @@ asa
 +getters
 +operator=: const EventStore&amp;
 +sort(): void
++filter(): EventStore&amp;
 +find(): Event&amp;
 +display(): void
 +iterator begin()
@@ -27,17 +28,18 @@ asa
 +operator==, &lt;, &gt;, &lt;=, &gt;=(): bool  
 +operator+, +=(): String / String&amp;  
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>580</x><y>400</y><w>210</w><h>80</h></coordinates><panel_attributes>&lt;&lt;MonthlyCalendar&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>640</x><y>400</y><w>210</w><h>90</h></coordinates><panel_attributes>&lt;&lt;MonthlyCalendar&gt;&gt;
 --
+-selYear: int
 -selMonth: int
 --
 +constructors
-+display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>870</x><y>400</y><w>210</w><h>80</h></coordinates><panel_attributes>&lt;&lt;YearlyCalendar&gt;&gt;
++printCalendar()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>870</x><y>400</y><w>210</w><h>80</h></coordinates><panel_attributes>&lt;&lt;YearlyCalendar&gt;&gt;
 --
 -selYear: int
 --
 +constructors
-+display()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>830</x><y>270</y><w>180</w><h>150</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;160;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>70</y><w>180</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Event&gt;&gt;
++printCalendar()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>830</x><y>290</y><w>180</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;160;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>70</y><w>180</w><h>120</h></coordinates><panel_attributes>&lt;&lt;Event&gt;&gt;
 --
 -evDate: Date
 -evTime: Time
@@ -69,4 +71,4 @@ _-weekDays: const char*[7]_
 +getters
 +isValid(): bool
 +operator==, &lt;, &gt;, &lt;=, &gt;= (): bool 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>780</x><y>430</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>80</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>120</y><w>110</w><h>170</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>170</y><w>110</w><h>330</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;310</additional_attributes></element></diagram>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>80</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>120</y><w>110</w><h>170</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>170</y><w>110</w><h>330</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;310</additional_attributes></element><element><id>Relation</id><coordinates><x>730</x><y>290</y><w>130</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>110;10;10;110</additional_attributes></element></diagram>

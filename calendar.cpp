@@ -23,9 +23,8 @@ EventStore& EventStore::operator=(const EventStore& rhs) {
         delete[] events;
         nEvents = rhs.nEvents;
         events = new Event[nEvents];
-        size_t i = 0;
-        for (Event &e : *this) {
-            e = rhs.events[i++];
+        for (size_t i = 0; i < nEvents; ++i) {
+            events[i] = rhs.events[i];
         }
     }
     return *this;
@@ -146,5 +145,19 @@ std::ostream& operator<<(std::ostream& os, const EventStore& rhs) {
         os << e << "\n";
     }
     return os;
+}
+
+void YearlyCalendar::printCalendar() {
+    // WIP
+    std::cout << "  Hé |  Ke | Sze | Csü | Pé  | Szo | Vas" << std::endl;
+    for (int j = 1; j < 10; j++) {
+        for (int i = 1; i < 42; i++) {
+            if (i % 6 == 0) {
+                std::cout << "+";
+            } else {
+                std::cout << "-";
+            }
+        }
+    }
 }
 

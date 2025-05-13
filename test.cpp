@@ -366,6 +366,37 @@ int main() {
         EXPECT_STREQ("2025. 01. 22. 10:00 - Esemény1\n2025. 03. 02. 19:20 - Esemény2\n", ss.str().c_str());
     } END
 
+    TEST(YearlyCalendar, CTOR) {
+        // 2025-beli - nincs benne
+        Event e1(2025,02,22,10,00, "Kívül1");
+        Event e2(2025,8,26,01,00, "Kívül2");
+        Event e3(2025,02,10,10,00, "Kívül3");
+        // 2026-beli
+        Event e4(2026,9,16,10,00, "Benne1");
+        Event e5(2026,01,26,01,00, "Benne2");
+        Event e6(2026,12,16,10,00, "Benne3");
+        EventStore es;
+        es+e1+e2+e3+e4+e5+e6;
+        YearlyCalendar y26(es, 2026);
+        std::cout << "2026-os események:\n"<< y26 << std::endl;
+        y26.printCalendar();
+    } END
+
+    TEST(MonthlyCalendar, CTOR) {
+        // 2025-beli
+        Event e1(2025,02,22,10,00, "Kívül1");
+        Event e2(2025,8,26,01,00, "Benne1");
+        Event e3(2025,8,10,10,00, "Benne2");
+        // 2026-beli
+        Event e4(2026,9,16,10,00, "Kívül2");
+        Event e5(2026,12,26,01,00, "Kívül3");
+        Event e6(2026,12,16,10,00, "Kívül4");
+        EventStore es;
+        es+e1+e2+e3+e4+e5+e6;
+        MonthlyCalendar m2508(es, 2025, 8);
+        std::cout << "2025-ös augusztusi események:\n"<< m2508 << std::endl;
+    } END
+
     // JPORTA működéséhez
     GTEND(std::cerr);
     return 0;
