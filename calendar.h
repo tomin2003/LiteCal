@@ -85,18 +85,18 @@ public:
     void sort();
 
     /// @brief Szűrés egy adott paraméter szerint az eseménytárolóban.
-    /// @param year év paraméter (alapértelmezett = NOPARAM (-1))
-    /// @param month hónap paraméter (alapértelmezett = NOPARAM (-1))
-    /// @param day nap paraméter (alapértelmezett = NOPARAM (-1))
-    /// @return Új eseménytároló (konstans)
-    EventStore filterBy(int year = NOPARAM, int month = NOPARAM, int day = NOPARAM);
+    /// @param year év paraméter
+    /// @param month hónap paraméter (elhagyható)
+    /// @param day nap paraméter (elhagyható)
+    /// @return Új eseménytároló
+    EventStore filterBy(int year, int month = NOPARAM, int day = NOPARAM);
 
     /// @brief Szűrés egy adott paraméter szerint az eseménytárolóban.
-    /// @param year év paraméter (alapértelmezett = NOPARAM (-1))
-    /// @param month hónap paraméter (alapértelmezett = NOPARAM (-1))
-    /// @param day nap paraméter (alapértelmezett = NOPARAM (-1))
+    /// @param year év paraméter
+    /// @param month hónap paraméter (elhagyható)
+    /// @param day nap paraméter (elhagyható)
     /// @return Új eseménytároló (konstans)
-    const EventStore filterBy(int year = NOPARAM, int month = NOPARAM, int day = NOPARAM) const;
+    const EventStore filterBy(int year, int month = NOPARAM, int day = NOPARAM) const;
 
     /// @brief Iterátor kezdete
     /// @return Első esemény pointer

@@ -66,7 +66,7 @@ EventStore EventStore::filterBy(int year, int month, int day) {
         const auto& date = e.getEvDate();
 
         bool match = true;
-        if (year != NOPARAM && date.getYear() != year) match = false;
+        if (date.getYear() != year) match = false;
         if (month != NOPARAM && date.getMonth() != month) match = false;
         if (day != NOPARAM && date.getDay() != day) match = false;
         if (match) {
@@ -83,7 +83,7 @@ const EventStore EventStore::filterBy(int year, int month, int day) const {
         const auto& date = e.getEvDate();
 
         bool match = true;
-        if (year != NOPARAM && date.getYear() != year) match = false;
+        if (date.getYear() != year) match = false;
         if (month != NOPARAM && date.getMonth() != month) match = false;
         if (day != NOPARAM && date.getDay() != day) match = false;
         if (match) {

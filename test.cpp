@@ -335,6 +335,26 @@ int main() {
         EXPECT_TRUE(std::is_sorted(es.begin(), es.end()));
     } END
 
+    TEST(EventStore, FILTER) {
+        // Egyező napok eseményei
+        Event e1(2025,02,22,10,00, "Ugyanazanap1");
+        Event e2(2025,02,22,19,20, "Ugyanazanap2");
+        // Egyező hónap-beli események
+        Event e3(2025,02,10,10,00, "Februári1");
+        Event e4(2025,02,02,8,20, "Februári2");
+        // Egyező év-beli események
+        Event e5(2025,8,26,01,00, "Idei1");
+        Event e6(2025,9,16,10,00, "Idei2");
+        // Különböző év-beli események
+        Event e7(2028,01,26,01,00, "Másév1");
+        Event e8(2026,12,16,10,00, "Másév2");
+        EventStore es;
+        es+e1+e2+e3+e4+e5+e6+e7+e8;
+        std::cout << "Nap szerint szűrve:\n" << es.filterBy(2025, 2, 22) << std::endl;
+        std::cout << "Hónap szerint szűrve:\n" << es.filterBy(2025, 2) << std::endl;
+        std::cout << "Év szerint szűrve:\n" << es.filterBy(2025) << std::endl;
+    } END
+
     TEST(EventStore, STREAM) {
         EventStore es;
         Event e1(2025,01,22,10,00, "Esemény1");
