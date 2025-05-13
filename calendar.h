@@ -7,6 +7,8 @@
 #include "date.h"
 #include "time.h"
 
+#define NOPARAM -1
+
 /// @class EventStore
 /// A többi (éves, havi) naptár alaposztálya
 class EventStore {
@@ -78,9 +80,23 @@ public:
     /// @return *this pointer
     EventStore& operator-(const Event& rhs);
     
-    /// @brief Az események listájt dátum szerint csökkenő sorrendbe rendezi.
+    /// @brief Az események listáját dátum szerint csökkenő sorrendbe rendezi.
     /// Ehhez az std::sort() STL függvényt használja.
     void sort();
+
+    /// @brief Szűrés egy adott paraméter szerint az eseménytárolóban.
+    /// @param year év paraméter (alapértelmezett = NOPARAM (-1))
+    /// @param month hónap paraméter (alapértelmezett = NOPARAM (-1))
+    /// @param day nap paraméter (alapértelmezett = NOPARAM (-1))
+    /// @return Új eseménytároló (konstans)
+    EventStore filterBy(int year = NOPARAM, int month = NOPARAM, int day = NOPARAM);
+
+    /// @brief Szűrés egy adott paraméter szerint az eseménytárolóban.
+    /// @param year év paraméter (alapértelmezett = NOPARAM (-1))
+    /// @param month hónap paraméter (alapértelmezett = NOPARAM (-1))
+    /// @param day nap paraméter (alapértelmezett = NOPARAM (-1))
+    /// @return Új eseménytároló (konstans)
+    const EventStore filterBy(int year = NOPARAM, int month = NOPARAM, int day = NOPARAM) const;
 
     /// @brief Iterátor kezdete
     /// @return Első esemény pointer

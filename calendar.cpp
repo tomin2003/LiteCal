@@ -57,6 +57,42 @@ const Event& EventStore::find(const Event& searchCrit) const {
    return *it;
 }
 
+/*Szűrés*/
+
+EventStore EventStore::filterBy(int year, int month, int day) {
+    EventStore filteredStore;
+
+    for (const Event& e : *this) {
+        const auto& date = e.getEvDate();
+
+        bool match = true;
+        if (year != NOPARAM && date.getYear() != year) match = false;
+        if (month != NOPARAM && date.getMonth() != month) match = false;
+        if (day != NOPARAM && date.getDay() != day) match = false;
+        if (match) {
+            filteredStore + e;
+        }
+    }
+    return filteredStore;
+}
+
+const EventStore EventStore::filterBy(int year, int month, int day) const {
+    EventStore filteredStore;
+
+    for (const Event& e : *this) {
+        const auto& date = e.getEvDate();
+
+        bool match = true;
+        if (year != NOPARAM && date.getYear() != year) match = false;
+        if (month != NOPARAM && date.getMonth() != month) match = false;
+        if (day != NOPARAM && date.getDay() != day) match = false;
+        if (match) {
+            filteredStore + e;
+        }
+    }
+    return filteredStore;
+}
+
 /*Eseményütközés*/
 
 void EventStore::eventClash(const Event& checked) const {
@@ -111,3 +147,4 @@ std::ostream& operator<<(std::ostream& os, const EventStore& rhs) {
     }
     return os;
 }
+
