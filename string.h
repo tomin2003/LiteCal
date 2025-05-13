@@ -1,4 +1,4 @@
-// string.h dinamikus sztringkezelő osztály (deklarációk/inlineok) - 2025.03.28. SAXHSH
+// string.h dinamikus sztringkezelő osztály (deklarációk/inlineok) - SAXHSH
 #ifndef STRING_H
 #define STRING_H
 
@@ -99,15 +99,11 @@ public:
 };
 
 /// @brief Streamre történő kiírása egy Stringnek
-/// @param os Output stream referencia
-/// @param rhs A kiírandó objektum
-/// @return Manipulált output stream
+/// @return Output stream
 std::ostream& operator<<(std::ostream& os, const String& rhs);
 
 /// @brief Streamről történő beolvasás egy Stringbe.
-/// @param is Input stream referencia
-/// @param rhs Az objektum, amibe írás történik
-/// @return Manipulált input stream
+/// @return Input stream
 std::istream& operator>>(std::istream& is, String& rhs);
 
 #endif

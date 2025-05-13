@@ -1,6 +1,4 @@
-// calendar.h naptárkezelő osztály (deklarációk, inlineok) - 2025.03.31. SAXHSH
-#define IGNORE -1
-
+// calendar.h naptárkezelő osztály (deklarációk, inlineok) - SAXHSH
 #ifndef CALENDAR_H
 #define CALENDAR_H
 
@@ -8,7 +6,6 @@
 #include "string.h"
 #include "date.h"
 #include "time.h"
-
 
 /// @class EventStore
 /// A többi (éves, havi) naptár alaposztálya
@@ -45,19 +42,45 @@ public:
     /// @return Tárolt semények száma
     size_t getNEvents() { return nEvents; };
 
+    /// @brief Indexelő operátor
+    /// Módosíthatja a hívó objektumot. Végez indexellenőrzést, kivétellel tér vissza érvénytelen indexelés esetén.
+    /// @param i index
+    /// @return indexelt elem referenciája
+    Event& operator[](int i);
+    
+    /// @brief Indexelő operátor
+    /// NEM módosíthatja a hívó objektumot. Végez indexellenőrzést, kivétellel tér vissza érvénytelen indexelés esetén.
+    /// @param i index
+    /// @return indexelt elem értéke
+    Event operator[](int i) const;
+
+    /// @brief Kereső függvény az eseménytárolóban.
+    /// @param searchCrit Az esemény ami a keresés kritériuma
+    /// @return Az esemény referenciája (ha nincs találat, akkor except::nofind kivételt dob)
+    Event& find(const Event& searchCrit);
+    
+    /// @brief Kereső függvény az eseménytárolóban.
+    /// @param searchCrit Az esemény ami a keresés kritériuma
+    /// @return Az esemény referenciája (konstans) (ha nincs találat, akkor except::nofind kivételt dob)
+    const Event& find(const Event& searchCrit) const;
+
+    /// @brief Kivételt dob (except::evclash) ha a listában van a vizsgálttal ütköző esemény.
+    /// @param checked Vizsgált esemény
+    void eventClash(const Event& checked) const;
+
     /// @brief Az események listájához hozzáfűz egy új eseményt.
     /// @param rhs A hozzáfűzött esemény
-    void operator+(const Event& rhs);
+    /// @return *this pointer
+    EventStore& operator+(const Event& rhs);
 
     /// @brief Az események listájából töröl egy specifikus eseményt.
-    /// @param rhs A törtlendő esemény
-    void operator-(const Event& rhs);
+    /// @param rhs A törlendő esemény
+    /// @return *this pointer
+    EventStore& operator-(const Event& rhs);
     
     /// @brief Az események listájt dátum szerint csökkenő sorrendbe rendezi.
     /// Ehhez az std::sort() STL függvényt használja.
     void sort();
-    
-    size_t find(int year = IGNORE, int month = IGNORE, int day = IGNORE, int hour = IGNORE, int minute = IGNORE, String str = IGNORE);
 
     /// @brief Iterátor kezdete
     /// @return Első esemény pointer
@@ -82,6 +105,9 @@ public:
 /// @return output stream
 std::ostream& operator<<(std::ostream& os, const EventStore &rhs);
 
+// Ennek a résznek az implementációja még változhat, ez majd a felhasználói felületre lesz leginkább hatással
+// | | | 
+// v v v 
 class MonthlyCalendar :public EventStore {
 private:
     int selMonth;
@@ -91,7 +117,7 @@ public:
     MonthlyCalendar(int selMonth = 1) :selMonth(selMonth) {}
     void printCalendar();
 };
-    
+
 class YearlyCalendar :public EventStore {
 private:
     MonthlyCalendar m[12];

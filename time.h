@@ -1,4 +1,4 @@
-// time.h időkezelő osztály (deklarációk/inlineok) - 2025.04.05. SAXHSH
+// time.h időkezelő osztály (deklarációk/inlineok) - SAXHSH
 
 #ifndef TIME_H
 #define TIME_H
@@ -35,6 +35,16 @@ public:
     /// @return perc
     int getMinute() const { return minute; }
 
+    /*Megjegyzés: a settereknél a konstruktort újrafuttatom, hogy megmaradjon a hibaellenőrzés az új időpontokra.*/
+
+    /// @brief Setter függvény
+    /// @param óra
+    void setHour(int h) { *this = Time(h, minute); }
+
+    /// @brief Setter függvény
+    /// @param perc
+    void setMinute(int m) { *this = Time(hour, m); }
+
     /// @brief Két időpont összehasonlítása
     /// @param rhs összehasonlítás jobboldala
     /// @return lhs frisebb időpont-e mint rhs
@@ -64,6 +74,10 @@ public:
 /// @brief Egy időpontot kiíró stream operátor
 /// @return output stream (ÓÓ:PP)
 std::ostream& operator<<(std::ostream& os, const Time& rhs);
+
+/// @brief Egy időpontot beolvasó stream operátor (ÓÓ:PP)
+/// @return input stream 
+std::istream& operator>>(std::istream& is, Time& rhs);
  
 #endif
     

@@ -1,4 +1,4 @@
-// Date.cpp dátum és időkezelő osztály (definíciók) - 2025.03.31. SAXHSH
+// Date.cpp dátum és időkezelő osztály (definíciók) - SAXHSH
 
 #include "date.h"
 #include <iostream>
@@ -9,7 +9,7 @@
 
 /* Statikus adattag definíció */
 
-const char* Date::weekDays[7] = { {"Szombat"}, {"Vasarnap"}, {"Hetfo"}, {"Kedd"}, {"Szerda"}, {"Csutortok"}, {"Pentek"} };
+const char* Date::weekDays[7] = { "Szombat", "Vasarnap", "Hetfo", "Kedd", "Szerda", "Csutortok", "Pentek" };
 
 /* Getterek definíciója a headerben */
 
@@ -51,8 +51,8 @@ const char* Date::getWeekDay() const {
 }
 
 int Date::dateInDays() const {
-    int days = day;
-    for (int i = 1; i <= month; i++) {
+    int days = day-1;
+    for (int i = 1; i < month; i++) {
         days += daysInMonth(i);
     }
     for (int i = 1970; i < year; i++) {
@@ -76,7 +76,6 @@ bool Date::operator<(const Date& rhs) const {
     return day < rhs.day;
 }
 
-
 bool Date::operator==(const Date& rhs) const {
     return year == rhs.year && month == rhs.month && day == rhs.day;
 }
@@ -89,27 +88,51 @@ bool Date::operator>=(const Date& rhs) const {
     return (*this > rhs) || (*this == rhs);
 }
 
+/* Dátumhoz nap hozzáadása */
+
 Date Date::operator+(int rhs) const {
     int y = year;
     int m = month;
     int d = day + rhs;
-    while (d > daysInMonth(m)) {
-        m++;
-        d -= daysInMonth(m);
-        if (m > 12) {
-            m = 1;
-            y++;
+    while (d > daysInMonth(m)) { // nap túlcsordulás
+        d -= daysInMonth(m); 
+        m++;  // Következő hónap
+        if (m > 12) {  // Hónap túlcsordulás:
+            m = 1;  // Vissza januárra
+            y++; // +1 év
         }
     }
     return Date(y, m, d);
 }
 
+/* Dátum és dátum közötti napok száma */
+
 int Date::operator-(const Date& rhs) const {
     return abs(dateInDays()-rhs.dateInDays());
 }
 
+/* Stream operátorok */
 
 std::ostream& operator<<(std::ostream& os, const Date& rhs) {
     os << rhs.getYear() << ". " << std::setfill('0') << std::setw(2) << rhs.getMonth() << ". " << std::setw(2) << rhs.getDay() << '.';
     return os;
+}
+
+std::istream& operator>>(std::istream& is, Date& rhs) {
+    int year, month, day;
+    char dot1, dot2, dot3;
+    is >> year >> dot1 >> month >> dot2 >> day >> dot3;
+    if (is && dot1 == '.' && dot2 == '.' && dot3 == '.') {
+        try {
+            rhs.setYear(year);
+            rhs.setMonth(month);
+            rhs.setDay(day);
+        } catch(const invalid_date &e) {
+            std::cout << e.what();
+            is.setstate(std::ios::failbit); // Hibás beolvasás
+        }
+    } else {
+        is.setstate(std::ios::failbit); // Hibás beolvasás
+    }
+    return is;
 }
