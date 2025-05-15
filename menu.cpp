@@ -142,10 +142,10 @@ void handleDelEvent(EventStore& mainStore) {
             std::cout << '\n';
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-        char c;
-        std::cout << "Biztos szeretnéd törölni? (i/n) " << ev << "\n";
-        std::cin >> c;
+        } else {
+            char c;
+            std::cout << "Biztos szeretnéd törölni? (i/n) " << ev << "\n";
+            std::cin >> c;
         if (c == 'i') {
             mainStore - ev; // A túlterhelt "-" operátor tud nofind kivételt dobni
             mainStore.sort(); // A törlés után egy újrarendezés
@@ -155,6 +155,7 @@ void handleDelEvent(EventStore& mainStore) {
             system("clear");
             std::cout << "Törlés megszakítva.\n";
             return;
+            }
         }
     } catch (const invalid_date &e) {
         system("clear");
@@ -223,7 +224,7 @@ int main() {
                     case 2: {
                         handleAddEvent(mainStore);
                         std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        std::cin.ignore();
                         std::cin.get();
                         currentState = MenuState::MANAGE_MENU;
                         break;
@@ -232,7 +233,7 @@ int main() {
                         std::cout << "Felvett események:\n" << mainStore << std::endl;
                         handleDelEvent(mainStore);
                         std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        std::cin.ignore();
                         std::cin.get();
                         currentState = MenuState::MANAGE_MENU;
                         break;
