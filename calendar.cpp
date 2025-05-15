@@ -247,6 +247,10 @@ void MonthlyCalendar::printCalendar(std::ostream& os) {
         ((day+offset) % 7 == 0)?(os << '\n'):(os << '\t');
     }
     os << '\n';
+    for (int i = 0; i < 52; i++) {
+        os << '-';
+    }  
+    os << "\n\n";
 }
 
 void YearlyCalendar::printCalendar(std::ostream& os) {
@@ -257,10 +261,6 @@ void YearlyCalendar::printCalendar(std::ostream& os) {
         MonthlyCalendar temp(*this, selYear, month);
         temp.printCalendar(ss);
         os << ss.str();
-        for (int i = 0; i < 52; i++) {
-            os << '-';
-        }  
-        os << "\n\n";
     }
 }
 
