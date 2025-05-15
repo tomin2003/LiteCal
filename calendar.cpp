@@ -65,66 +65,6 @@ const Event& EventStore::find(const Event& searchEv) const {
    return *it;
 }
 
-Event& EventStore::find(const Date& searchDate) {
-    auto it = std::find_if(this->begin(), this->end(), [&searchDate](const Event& e) {
-        return e.getEvDate() == searchDate;
-    });
-    if (it == this->end()) {
-        throw nofind("Az esemény nem található.");
-    }
-    return *it;
- }
-
-const Event& EventStore::find(const Date& searchDate) const {
-    auto it = std::find_if(this->begin(), this->end(), [&searchDate](const Event& e) {
-        return e.getEvDate() == searchDate;
-    });
-    if (it == this->end()) {
-        throw nofind("Az esemény nem található.");
-    }
-    return *it;
- }
-
- Event& EventStore::find(const Time& searchTime) {
-    auto it = std::find_if(this->begin(), this->end(), [&searchTime](const Event& e) {
-        return e.getEvTime() == searchTime;
-    });
-    if (it == this->end()) {
-        throw nofind("Az esemény nem található.");
-    }
-    return *it;
- }
-
-const Event& EventStore::find(const Time& searchTime) const {
-    auto it = std::find_if(this->begin(), this->end(), [&searchTime](const Event& e) {
-        return e.getEvTime() == searchTime;
-    });
-    if (it == this->end()) {
-        throw nofind("Az esemény nem található.");
-    }
-    return *it;
- }
-
- Event& EventStore::find(const String& searchDesc) {
-    auto it = std::find_if(this->begin(), this->end(), [&searchDesc](const Event& e) {
-        return e.getEvDesc() == searchDesc;
-    });
-    if (it == this->end()) {
-        throw nofind("Az esemény nem található.");
-    }
-    return *it;
- }
-
-const Event& EventStore::find(const String& searchDesc) const {
-    auto it = std::find_if(this->begin(), this->end(), [&searchDesc](const Event& e) {
-        return e.getEvDesc() == searchDesc;
-    });
-    if (it == this->end()) {
-        throw nofind("Az esemény nem található.");
-    }
-    return *it;
- }
-
 /*Szűrés*/
 
 EventStore EventStore::filterBy(int year, int month, int day) {
@@ -220,11 +160,14 @@ void MonthlyCalendar::printCalendar(std::ostream& os) {
     using namespace std; // sokszor kéne kiírni, itt a függvényen belül nem lesz baj belőle
     // fejléc
     os << "\t\t     " << selYear << ". " << setw(2) << setfill('0') << selMonth << '.' << endl;
-    for (int i = 0; i < 52; i++) {
+    for (int i = 0; i < 53; i++) {
+        os << '-';
+    }  
+    os << "\n Hé\t Ke\t Sze\t Csü\t Pén\t Szo\t Vas" << endl;
+    for (int i = 0; i < 53; i++) {
         os << '-';
     }  
     os << endl;
-    os << " Hé\t Ke\t Sze\t Csü\t Pén\t Szo\t Vas" << endl;
     // kiinduló dátum - ebből lehet meghatározni a kezdőnapját a hétnek
     Date baseline(selYear, selMonth, 1);
     int weekDayIdx = baseline.getWeekDayIdx();
@@ -247,10 +190,10 @@ void MonthlyCalendar::printCalendar(std::ostream& os) {
         ((day+offset) % 7 == 0)?(os << '\n'):(os << '\t');
     }
     os << '\n';
-    for (int i = 0; i < 52; i++) {
+    for (int i = 0; i < 53; i++) {
         os << '-';
     }  
-    os << "\n\n";
+    os << "\n" << *this << endl;
 }
 
 void YearlyCalendar::printCalendar(std::ostream& os) {

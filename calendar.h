@@ -7,6 +7,7 @@
 #include "date.h"
 #include "time.h"
 
+// Látszatos makró a szűrés tetszőleges elhagyható paramétereire
 #define NOPARAM -1
 
 /// @class EventStore
@@ -66,36 +67,6 @@ public:
     /// @return Az esemény referenciája (konstans) (ha nincs találat, akkor except::nofind kivételt dob)
     const Event& find(const Event& searchEv) const;
 
-    /// @brief Kereső függvény az eseménytárolóban.
-    /// @param searchDate A dátum, ami alapján eseményt keresünk
-    /// @return Az esemény referenciája (ha nincs találat, akkor except::nofind kivételt dob)
-    Event& find(const Date& searchDate);
-
-    /// @brief Kereső függvény az eseménytárolóban.
-    /// @param searchDate A dátum, ami alapján eseményt keresünk
-    /// @return Az esemény referenciája (konstans) (ha nincs találat, akkor except::nofind kivételt dob)
-    const Event& find(const Date& searchDate) const;
-
-    /// @brief Kereső függvény az eseménytárolóban.
-    /// @param searchTime Az időpont, ami alapján eseményt keresünk
-    /// @return Az esemény referenciája (ha nincs találat, akkor except::nofind kivételt dob)
-    Event& find(const Time& searchTime);
-
-    /// @brief Kereső függvény az eseménytárolóban.
-    /// @param searchTime Az időpont, ami alapján eseményt keresünk
-    /// @return Az esemény referenciája (konstans) (ha nincs találat, akkor except::nofind kivételt dob)
-    const Event& find(const Time& searchTime) const;
-
-    /// @brief Kereső függvény az eseménytárolóban.
-    /// @param searchDesc A leírás, ami alapján eseményt keresünk
-    /// @return Az esemény referenciája (ha nincs találat, akkor except::nofind kivételt dob)
-    Event& find(const String& searchDesc);
-
-    /// @brief Kereső függvény az eseménytárolóban.
-    /// @param searchDesc A leírás, ami alapján eseményt keresünk
-    /// @return Az esemény referenciája (konstans) (ha nincs találat, akkor except::nofind kivételt dob)
-    const Event& find(const String& searchDesc) const;
-
     /// @brief Kivételt dob (except::evclash) ha a listában van a vizsgálttal ütköző esemény.
     /// @param checked Vizsgált esemény
     void eventClash(const Event& checked) const;
@@ -151,9 +122,8 @@ public:
 /// @return output stream
 std::ostream& operator<<(std::ostream& os, const EventStore &rhs);
 
-// Ennek a résznek az implementációja még változhat, ez majd a felhasználói felületre lesz leginkább hatással
-// | | | 
-// v v v 
+/// @class YearlyCalendar
+/// Egy származtatott adapterosztálya az eseménytárolónak.
 class YearlyCalendar :public EventStore {
 private:
     int selYear; ///< kiválasztott év
@@ -165,9 +135,14 @@ public:
     /// @param src forrástároló
     /// @param selMonth kiválasztott év (default = 1970)
     YearlyCalendar(const EventStore& src, int selYear = 1970) :EventStore(src.filterBy(selYear)), selYear(selYear) {}
+
+    /// @brief Kiírja a naptárat éves nézetben.
+    /// @param os output stream
     void printCalendar(std::ostream& os = std::cout);
 };
 
+/// @class MonthlyCalendar
+/// Egy származtatott adapterosztálya az eseménytárolónak.
 class MonthlyCalendar :public EventStore {
 private:
     int selYear; ///< kiválasztott év
@@ -182,6 +157,9 @@ public:
     /// @param selMonth kiválasztott hónap (default = 1)
     MonthlyCalendar(const EventStore& src, int selYear = 1970, int selMonth = 1) 
                     :EventStore(src.filterBy(selYear, selMonth)), selYear(selYear), selMonth(selMonth) {}
+
+    /// @brief Kiírja a naptárat havi nézetben.
+    /// @param os output stream
     void printCalendar(std::ostream& os = std::cout);
 };
 

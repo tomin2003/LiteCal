@@ -93,6 +93,9 @@ std::ostream& operator<<(std::ostream& os, const String& rhs) {
 
 std::istream& operator>>(std::istream& is, String& rhs) {
     char c; // szimpla karakter buffer
-    while(is.get(c)) rhs += c;
+    while(is.get(c)) {
+        if (c == '\n') break; // Enter esetén megáll
+        rhs += c;
+    }
     return is;
 }

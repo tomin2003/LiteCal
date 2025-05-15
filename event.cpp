@@ -42,7 +42,8 @@ std::istream& operator>>(std::istream& is, Event& rhs) {
     Date d;
     Time t;
     char dash;
-    is >> d >> t >> dash;
+    // A kötőjel utáni space-t is beleszámítja
+    is >> d >> t >> dash >> std::ws;
     // Beolvasás a kötőjelig
     if (is && dash == '-') {
         String s;
