@@ -7,6 +7,7 @@
 #include "time.h"
 #include "except.h"
 #include <algorithm>
+#include <iomanip>
 
 /*Másoló konstruktor*/
 
@@ -33,28 +34,96 @@ EventStore& EventStore::operator=(const EventStore& rhs) {
 /*Indexelő operátorok*/
 
 Event& EventStore::operator[](int i) {
-    if (i < 0 || i >= static_cast<int>(nEvents)) throw std::out_of_range ("Túlindexelted az eseménytárolót!");
+    if (i < 0 || i >= static_cast<int>(nEvents)) {
+        throw std::out_of_range ("Túlindexelted az eseménytárolót!");
+    }
     return events[i];
 }
 
 Event EventStore::operator[](int i) const {
-    if (i < 0 || i >= static_cast<int>(nEvents)) throw std::out_of_range ("Túlindexelted az eseménytárolót!");
+    if (i < 0 || i >= static_cast<int>(nEvents)) {
+        throw std::out_of_range ("Túlindexelted az eseménytárolót!");
+    }
     return events[i];
 }
 
 /*Keresés*/
 
-Event& EventStore::find(const Event& searchCrit) {
-    auto it = std::find(this->begin(), this->end(), searchCrit);
-    if (it == this->end()) throw nofind("Az esemény nem található.");
+Event& EventStore::find(const Event& searchEv) {
+    auto it = std::find(this->begin(), this->end(), searchEv);
+    if (it == this->end()) {
+        throw nofind("Az esemény nem található.");
+    }
     return *it;
  }
 
-const Event& EventStore::find(const Event& searchCrit) const {
-   auto it = std::find(this->begin(), this->end(), searchCrit);
-   if (it == this->end()) throw nofind("Az esemény nem található.");
+const Event& EventStore::find(const Event& searchEv) const {
+   auto it = std::find(this->begin(), this->end(), searchEv);
+   if (it == this->end()) {
+       throw nofind("Az esemény nem található.");
+   }
    return *it;
 }
+
+Event& EventStore::find(const Date& searchDate) {
+    auto it = std::find_if(this->begin(), this->end(), [&searchDate](const Event& e) {
+        return e.getEvDate() == searchDate;
+    });
+    if (it == this->end()) {
+        throw nofind("Az esemény nem található.");
+    }
+    return *it;
+ }
+
+const Event& EventStore::find(const Date& searchDate) const {
+    auto it = std::find_if(this->begin(), this->end(), [&searchDate](const Event& e) {
+        return e.getEvDate() == searchDate;
+    });
+    if (it == this->end()) {
+        throw nofind("Az esemény nem található.");
+    }
+    return *it;
+ }
+
+ Event& EventStore::find(const Time& searchTime) {
+    auto it = std::find_if(this->begin(), this->end(), [&searchTime](const Event& e) {
+        return e.getEvTime() == searchTime;
+    });
+    if (it == this->end()) {
+        throw nofind("Az esemény nem található.");
+    }
+    return *it;
+ }
+
+const Event& EventStore::find(const Time& searchTime) const {
+    auto it = std::find_if(this->begin(), this->end(), [&searchTime](const Event& e) {
+        return e.getEvTime() == searchTime;
+    });
+    if (it == this->end()) {
+        throw nofind("Az esemény nem található.");
+    }
+    return *it;
+ }
+
+ Event& EventStore::find(const String& searchDesc) {
+    auto it = std::find_if(this->begin(), this->end(), [&searchDesc](const Event& e) {
+        return e.getEvDesc() == searchDesc;
+    });
+    if (it == this->end()) {
+        throw nofind("Az esemény nem található.");
+    }
+    return *it;
+ }
+
+const Event& EventStore::find(const String& searchDesc) const {
+    auto it = std::find_if(this->begin(), this->end(), [&searchDesc](const Event& e) {
+        return e.getEvDesc() == searchDesc;
+    });
+    if (it == this->end()) {
+        throw nofind("Az esemény nem található.");
+    }
+    return *it;
+ }
 
 /*Szűrés*/
 
@@ -147,17 +216,51 @@ std::ostream& operator<<(std::ostream& os, const EventStore& rhs) {
     return os;
 }
 
-void YearlyCalendar::printCalendar() {
-    // WIP
-    std::cout << "  Hé |  Ke | Sze | Csü | Pé  | Szo | Vas" << std::endl;
-    for (int j = 1; j < 10; j++) {
-        for (int i = 1; i < 42; i++) {
-            if (i % 6 == 0) {
-                std::cout << "+";
-            } else {
-                std::cout << "-";
+void MonthlyCalendar::printCalendar(std::ostream& os) {
+    using namespace std; // sokszor kéne kiírni, itt a függvényen belül nem lesz baj belőle
+    // fejléc
+    os << "\t\t     " << selYear << ". " << setw(2) << setfill('0') << selMonth << '.' << endl;
+    for (int i = 0; i < 52; i++) {
+        os << '-';
+    }  
+    os << endl;
+    os << " Hé\t Ke\t Sze\t Csü\t Pén\t Szo\t Vas" << endl;
+    // kiinduló dátum - ebből lehet meghatározni a kezdőnapját a hétnek
+    Date baseline(selYear, selMonth, 1);
+    int weekDayIdx = baseline.getWeekDayIdx();
+    // a végdátumot itt kezeljük le
+    int maxdays = baseline.daysInMonth(selMonth);
+    int offset; // és a kezdőnep segítségével eltolni
+    for (offset = 0; offset < weekDayIdx; offset++) {
+        os << '\t';
+    }
+    for (int day = 1; day <= maxdays; day++) {
+        os << ' ' << setw(2) << setfill(' ') << day;
+        // Találja meg azt a napot, amely napon van esemény 
+        // a find() nem boolt ad vissza, kivételt is dob, nem ideális!
+        for (int j = 0; j < static_cast<int>(nEvents); j++) {
+            if (events[j].getEvDate().getDay() == day) {
+                os << '*'; // megjelöli azokat a napokat, amiken van esemény
             }
         }
+        // Egy sorban max 7 nap, utána új sor
+        ((day+offset) % 7 == 0)?(os << '\n'):(os << '\t');
+    }
+    os << '\n';
+}
+
+void YearlyCalendar::printCalendar(std::ostream& os) {
+    using namespace std; // sokszor kéne kiírni, itt a függvényen belül nem lesz baj belőle
+    // 12 db hónap egymásutánja
+    for (int month = 1; month <= 12; month++) {
+        std::stringstream ss;
+        MonthlyCalendar temp(*this, selYear, month);
+        temp.printCalendar(ss);
+        os << ss.str();
+        for (int i = 0; i < 52; i++) {
+            os << '-';
+        }  
+        os << "\n\n";
     }
 }
 

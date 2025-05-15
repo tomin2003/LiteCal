@@ -393,8 +393,9 @@ int main() {
         Event e6(2026,12,16,10,00, "Kívül4");
         EventStore es;
         es+e1+e2+e3+e4+e5+e6;
-        MonthlyCalendar m2508(es, 2025, 8);
+        MonthlyCalendar m2508(es, 2025, 2);
         std::cout << "2025-ös augusztusi események:\n"<< m2508 << std::endl;
+        m2508.printCalendar();
     } END
 
     // JPORTA működéséhez

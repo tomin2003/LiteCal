@@ -80,6 +80,12 @@ public:
     /// @return A hét egy adott napja
     const char* getWeekDay() const;
 
+    /// @brief Megállapítja, hogy egy dátum milyen napra esik.
+    /// Ehhez a "Zeller's congruence" nevű algoritmust használtam. 
+    /// Forrás: https://www.geeksforgeeks.org/zellers-congruence-find-day-date/
+    /// @return A hét egy adott napjának indexe (Hétfő = 0, Vasárnap = 6)
+    size_t getWeekDayIdx() const;
+
     /// @brief Két dátum összehasonlítása
     /// @param rhs összehasonlítás jobboldala
     /// @return lhs frisebb dátum-e mint rhs

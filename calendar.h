@@ -57,14 +57,44 @@ public:
     Event operator[](int i) const;
 
     /// @brief Kereső függvény az eseménytárolóban.
-    /// @param searchCrit Az esemény ami a keresés kritériuma
+    /// @param searchEv Az esemény ami a keresés kritériuma
     /// @return Az esemény referenciája (ha nincs találat, akkor except::nofind kivételt dob)
-    Event& find(const Event& searchCrit);
+    Event& find(const Event& searchEv);
     
     /// @brief Kereső függvény az eseménytárolóban.
     /// @param searchCrit Az esemény ami a keresés kritériuma
     /// @return Az esemény referenciája (konstans) (ha nincs találat, akkor except::nofind kivételt dob)
-    const Event& find(const Event& searchCrit) const;
+    const Event& find(const Event& searchEv) const;
+
+    /// @brief Kereső függvény az eseménytárolóban.
+    /// @param searchDate A dátum, ami alapján eseményt keresünk
+    /// @return Az esemény referenciája (ha nincs találat, akkor except::nofind kivételt dob)
+    Event& find(const Date& searchDate);
+
+    /// @brief Kereső függvény az eseménytárolóban.
+    /// @param searchDate A dátum, ami alapján eseményt keresünk
+    /// @return Az esemény referenciája (konstans) (ha nincs találat, akkor except::nofind kivételt dob)
+    const Event& find(const Date& searchDate) const;
+
+    /// @brief Kereső függvény az eseménytárolóban.
+    /// @param searchTime Az időpont, ami alapján eseményt keresünk
+    /// @return Az esemény referenciája (ha nincs találat, akkor except::nofind kivételt dob)
+    Event& find(const Time& searchTime);
+
+    /// @brief Kereső függvény az eseménytárolóban.
+    /// @param searchTime Az időpont, ami alapján eseményt keresünk
+    /// @return Az esemény referenciája (konstans) (ha nincs találat, akkor except::nofind kivételt dob)
+    const Event& find(const Time& searchTime) const;
+
+    /// @brief Kereső függvény az eseménytárolóban.
+    /// @param searchDesc A leírás, ami alapján eseményt keresünk
+    /// @return Az esemény referenciája (ha nincs találat, akkor except::nofind kivételt dob)
+    Event& find(const String& searchDesc);
+
+    /// @brief Kereső függvény az eseménytárolóban.
+    /// @param searchDesc A leírás, ami alapján eseményt keresünk
+    /// @return Az esemény referenciája (konstans) (ha nincs találat, akkor except::nofind kivételt dob)
+    const Event& find(const String& searchDesc) const;
 
     /// @brief Kivételt dob (except::evclash) ha a listában van a vizsgálttal ütköző esemény.
     /// @param checked Vizsgált esemény
@@ -135,7 +165,7 @@ public:
     /// @param src forrástároló
     /// @param selMonth kiválasztott év (default = 1970)
     YearlyCalendar(const EventStore& src, int selYear = 1970) :EventStore(src.filterBy(selYear)), selYear(selYear) {}
-    void printCalendar();
+    void printCalendar(std::ostream& os = std::cout);
 };
 
 class MonthlyCalendar :public EventStore {
@@ -152,7 +182,7 @@ public:
     /// @param selMonth kiválasztott hónap (default = 1)
     MonthlyCalendar(const EventStore& src, int selYear = 1970, int selMonth = 1) 
                     :EventStore(src.filterBy(selYear, selMonth)), selYear(selYear), selMonth(selMonth) {}
-    void printCalendar();
+    void printCalendar(std::ostream& os = std::cout);
 };
 
 #endif
