@@ -39,11 +39,11 @@ public:
 
     /// @brief Getter függvény  
     /// @return Tároló
-    Event* getEvents() { return events; }
+    Event* getEvents() const { return events; }
     
     /// @brief Getter függvény
     /// @return Tárolt semények száma
-    size_t getNEvents() { return nEvents; };
+    size_t getNEvents() const { return nEvents; };
 
     /// @brief Indexelő operátor
     /// Módosíthatja a hívó objektumot. Végez indexellenőrzést, kivétellel tér vissza érvénytelen indexelés esetén.

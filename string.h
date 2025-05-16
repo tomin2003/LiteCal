@@ -96,6 +96,11 @@ public:
     /// @param rhs A hívóval összehasonlítandó String
     /// @return lhs ugyanaz-e, mint rhs
     bool operator==(const String& rhs) const;
+
+    /// @brief Két sztring nem megegyező-e
+    /// @param rhs A hívóval összehasonlítandó String
+    /// @return lhs nem ugyanaz-e, mint rhs
+    bool operator!=(const String& rhs) const;
 };
 
 /// @brief Streamre történő kiírása egy Stringnek

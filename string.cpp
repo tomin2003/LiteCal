@@ -84,6 +84,10 @@ bool String::operator==(const String& rhs) const {
     return (strcmp(pData, rhs.pData) == 0);
 }
 
+bool String::operator!=(const String& rhs) const {
+    return (strcmp(pData, rhs.pData) != 0);
+}
+
 /* Stream operátorok */
 
 std::ostream& operator<<(std::ostream& os, const String& rhs) {

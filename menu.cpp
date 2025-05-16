@@ -98,12 +98,12 @@ void handleAddEvent(EventStore& mainStore) {
     while (!correct) {
         try {
             Event ev;
-            std::cout << "Add meg az eseményt (ÉÉÉÉ.HH.NN. ÓÓ:PP - LEÍRÁS):\n";
+            std::cout << "Add meg az eseményt (ÉÉÉÉ. HH. NN. ÓÓ:PP - LEÍRÁS):\n";
             std::cin >> ev;
             if (!std::cin) {
                 std::cout << '\n';
                 std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
                 continue;
             }
             char c;
@@ -115,6 +115,7 @@ void handleAddEvent(EventStore& mainStore) {
                 mainStore.sort();   
                 system("clear");
                 std::cout << "Esemény hozzáadva.\n";
+                std::cin.ignore();
             } else if (c == 'n') {
                 correct = false;
                 system("clear");
@@ -134,27 +135,29 @@ void handleAddEvent(EventStore& mainStore) {
 
 void handleDelEvent(EventStore& mainStore) {
     system("clear");
+        std::cout << mainStore << std::endl;
     try {
         Event ev;
-        std::cout << "Add meg az eseményt (ÉÉÉÉ.HH.NN. ÓÓ:PP - LEÍRÁS):\n";
+        std::cout << "Add meg az eseményt (ÉÉÉÉ. HH. NN. ÓÓ:PP - LEÍRÁS):" << std::endl;
         std::cin >> ev;
         if (!std::cin) {
-            std::cout << '\n';
+            std::cout << std::endl;
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         } else {
             char c;
-            std::cout << "Biztos szeretnéd törölni? (i/n) " << ev << "\n";
+            std::cout << "Biztos szeretnéd törölni? (i/n) " << ev << std::endl;
             std::cin >> c;
-        if (c == 'i') {
-            mainStore - ev; // A túlterhelt "-" operátor tud nofind kivételt dobni
-            mainStore.sort(); // A törlés után egy újrarendezés
-            system("clear");
-            std::cout << "Esemény törölve.\n";
-        } else if (c == 'n') {
-            system("clear");
-            std::cout << "Törlés megszakítva.\n";
-            return;
+            if (c == 'i') {
+                mainStore - ev; // A túlterhelt "-" operátor tud nofind kivételt dobni
+                mainStore.sort(); // A törlés után egy újrarendezés
+                system("clear");
+                std::cout << "Esemény törölve." << std::endl;
+                std::cin.ignore();
+            } else if (c == 'n') {
+                system("clear");
+                std::cout << "Törlés megszakítva." << std::endl;
+                return;
             }
         }
     } catch (const invalid_date &e) {
@@ -169,10 +172,30 @@ void handleDelEvent(EventStore& mainStore) {
     }
 }
 
-void handleSearch() {
-
+void handleSearch(const EventStore& mainStore) {
+    system("clear");
+    try {
+        Event ev;
+        std::cout << "Add meg az eseményt (ÉÉÉÉ. HH. NN. ÓÓ:PP - LEÍRÁS):\n";
+        std::cin >> ev;
+        if (!std::cin) {
+            std::cout << '\n';
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        mainStore.find(ev);
+        std::cout << "A(z) '" << ev << "' esemény benne van a listában.\n";
+    } catch (const invalid_date &e) {
+        system("clear");
+        std::cout << e.what() << std::endl;
+    } catch (const invalid_time &e) {
+        system("clear");
+        std::cout << e.what() << std::endl;
+    } catch (const nofind &e) {
+        system("clear");
+        std::cout << e.what() << std::endl;
+    }
 }
-
 
 int main() {
     MenuState currentState = MenuState::MAIN_MENU;
@@ -216,7 +239,7 @@ int main() {
                         system("clear");
                         std::cout << "Az összes eltárolt esemény: \n" << mainStore << std::endl;
                         std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.ignore(); // dummy input 
+                        std::cin.ignore();
                         std::cin.get();
                         currentState = MenuState::MAIN_MENU;
                         break;
@@ -224,22 +247,23 @@ int main() {
                     case 2: {
                         handleAddEvent(mainStore);
                         std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.ignore();
                         std::cin.get();
                         currentState = MenuState::MANAGE_MENU;
                         break;
                     }
                     case 3: {
-                        std::cout << "Felvett események:\n" << mainStore << std::endl;
                         handleDelEvent(mainStore);
                         std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.ignore();
                         std::cin.get();
                         currentState = MenuState::MANAGE_MENU;
                         break;
                     }
                     case 4: {
-                        
+                        handleSearch(mainStore);
+                        std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
+                        std::cin.get();
+                        currentState = MenuState::MANAGE_MENU;
+                        break;
                     }
                     case 5: {
                         currentState = MenuState::FILTER_MENU;
@@ -279,7 +303,6 @@ int main() {
             case MenuState::MONTHLY: {
                 showMonthly(mainStore);
                 std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                std::cin.ignore(); // dummy input 
                 std::cin.get();
                 currentState = MenuState::MAIN_MENU;
                 system("clear");
@@ -289,7 +312,6 @@ int main() {
             case MenuState::YEARLY: {
                 showYearly(mainStore);
                 std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                std::cin.ignore(); // dummy input 
                 std::cin.get();
                 currentState = MenuState::MAIN_MENU;
                 system("clear");

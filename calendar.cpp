@@ -34,6 +34,7 @@ EventStore& EventStore::operator=(const EventStore& rhs) {
 /*Indexelő operátorok*/
 
 Event& EventStore::operator[](int i) {
+    // A size_t-t int-é kell alakítani
     if (i < 0 || i >= static_cast<int>(nEvents)) {
         throw std::out_of_range ("Túlindexelted az eseménytárolót!");
     }
@@ -41,6 +42,7 @@ Event& EventStore::operator[](int i) {
 }
 
 Event EventStore::operator[](int i) const {
+    // A size_t-t int-é kell alakítani
     if (i < 0 || i >= static_cast<int>(nEvents)) {
         throw std::out_of_range ("Túlindexelted az eseménytárolót!");
     }
@@ -51,7 +53,8 @@ Event EventStore::operator[](int i) const {
 
 Event& EventStore::find(const Event& searchEv) {
     auto it = std::find(this->begin(), this->end(), searchEv);
-    if (it == this->end()) {
+    // Nincs meg, ha az iterátor már kimutat, vagy ha nem egyezik a leírás (a leírást a find nem figyeli)
+    if (it == this->end() || it->getEvDesc() != searchEv.getEvDesc()) {
         throw nofind("Az esemény nem található.");
     }
     return *it;
@@ -59,7 +62,8 @@ Event& EventStore::find(const Event& searchEv) {
 
 const Event& EventStore::find(const Event& searchEv) const {
    auto it = std::find(this->begin(), this->end(), searchEv);
-   if (it == this->end()) {
+   // Nincs meg, ha az iterátor már kimutat, vagy ha nem egyezik a leírás (a leírást a find nem figyeli)
+   if (it == this->end() || it->getEvDesc() != searchEv.getEvDesc()) {
        throw nofind("Az esemény nem található.");
    }
    return *it;
@@ -151,8 +155,8 @@ void EventStore::sort() {
 
 std::ostream& operator<<(std::ostream& os, const EventStore& rhs) {
     for (const Event &e : rhs) {
-        os << e << "\n";
-    }
+        os << e << std::endl;
+    }   
     return os;
 }
 
