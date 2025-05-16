@@ -33,9 +33,7 @@ public:
     EventStore& operator=(const EventStore& rhs);
 
     /// @brief Destruktor (virtuális)
-    virtual ~EventStore() { 
-        delete[] events;
-    }
+    virtual ~EventStore() { delete[] events; }
 
     /// @brief Getter függvény  
     /// @return Tároló
@@ -86,18 +84,18 @@ public:
     void sort();
 
     /// @brief Szűrés egy adott paraméter szerint az eseménytárolóban.
-    /// @param year év paraméter
+    /// @param year év paraméter (elhagyható)
     /// @param month hónap paraméter (elhagyható)
     /// @param day nap paraméter (elhagyható)
     /// @return Új eseménytároló
-    EventStore filterBy(int year, int month = NOPARAM, int day = NOPARAM);
+    EventStore filterBy(int year = NOPARAM, int month = NOPARAM, int day = NOPARAM);
 
     /// @brief Szűrés egy adott paraméter szerint az eseménytárolóban.
-    /// @param year év paraméter
+    /// @param year év paraméter (elhagyható)
     /// @param month hónap paraméter (elhagyható)
     /// @param day nap paraméter (elhagyható)
     /// @return Új eseménytároló (konstans)
-    const EventStore filterBy(int year, int month = NOPARAM, int day = NOPARAM) const;
+    const EventStore filterBy(int year = NOPARAM, int month = NOPARAM, int day = NOPARAM) const;
 
     /// @brief Iterátor kezdete
     /// @return Első esemény pointer
@@ -116,7 +114,7 @@ public:
     const Event *end() const { return events + nEvents; }
 };
 
-/// @brief Az eseményeket kiíró operátor
+/// @brief Az eseményeket kiíró operátor.
 /// @param os output stream
 /// @param rhs eseménytömb
 /// @return output stream

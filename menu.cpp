@@ -1,59 +1,66 @@
-// menu.cpp - menüvezérelt program implementációja - SAXHSH
+#include "menu.h"
 
 #include "date.h"
 #include "time.h"
 #include "event.h"
 #include "calendar.h"
 #include "string.h"
+#include "menu.h"
 
 #include <iostream>
 #include <sstream>
 #include <algorithm>
 #include <limits>
 
-enum class MenuState {
-    MAIN_MENU,
-    MANAGE_MENU,
-    MONTHLY,
-    YEARLY,
-    FILTER_MENU,
-    EXIT
-};
 
 void showMainMenu() {
     system("clear");
     std::cout << "\n--- FŐMENÜ ---\n"
     << "1. Események kezelése\n"
-    << "2. Havi naptár kiírása\n"
-    << "3. Éves naptár kiírása\n"
-    << "4. Kilépés\n"
-    << "Válassz opciót (1-4): ";
+    << "2. Naptárműveletek\n"
+    << "3. Havi naptár kiírása\n"
+    << "4. Éves naptár kiírása\n"
+    << "5. Kilépés\n"
+    << "Válassz opciót (1-5): ";
 }
 
 void showManageMenu() {
     system("clear");
     std::cout << "\n--- ESEMÉNYEK ---\n"
-    << "1. Listázás\n"
-    << "2. Új felvétele\n"
-    << "3. Törlés\n"
+    << "1. Foglalt napok listázása\n"
+    << "2. Új esemény felvétele\n"
+    << "3. Esemény törlése\n"
     << "4. Keresés\n"
     << "5. Szűrés...\n"
     << "6. Vissza\n"
     << "Válassz opciót (1-6): ";
 }
 
-void showFilterMenu() {
+void showCalOpsMenu() {
     system("clear");
-    std::cout << "\n--- SZŰRÉS ---\n"
-    << "1. Dátum szerint\n"
-    << "2. Év szerint\n"
-    << "3. Hónap szerint\n"
-    << "4. Nap szerint\n"
+    std::cout << "\n--- NAPTÁRMŰVELETEK ---\n"
+    << "1. A hét melyik napjára esik egy nap?\n"
+    << "2. Hány nap van a két dátum között?\n"
+    << "3. Hány nap van hátra egy adott dátumig?\n"
+    << "4. Mi lesz a dátum X nap múlva?\n"
     << "5. Vissza\n"
     << "Válassz opciót (1-5): ";
 }
 
-void showMonthly(const EventStore& es) {
+void showFilterMenu() {
+    system("clear");
+    std::cout << "\n--- SZŰRÉS ---\n"
+    << "1. Dátum szerint\n"
+    << "2. Év és hónap szerint\n"
+    << "3. Hónap és nap szerint\n"
+    << "4. Év szerint\n"
+    << "5. Hónap szerint\n"
+    << "6. Nap szerint\n"
+    << "7. Vissza\n"
+    << "Válassz opciót (1-7): ";
+}
+
+void showMonthly(const EventStore& mainStore) {
     system("clear");
     std::cout << "\n--- Havi naptár ---\n"
     << "\nMelyik év? ";
@@ -68,14 +75,14 @@ void showMonthly(const EventStore& es) {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
     system("clear");
     try {
-        MonthlyCalendar(es, year, month).printCalendar();
+        MonthlyCalendar(mainStore, year, month).printCalendar();
     } catch(const invalid_date &e) {
         system("clear");
         std::cout << e.what() << "\nAdj meg egy új dátumot.\n";
     }
 }
 
-void showYearly(const EventStore& es) {
+void showYearly(const EventStore& mainStore) {
     system("clear");
     std::cout << "\n--- Éves naptár ---\n"
     << "\nMelyik év? ";
@@ -85,7 +92,7 @@ void showYearly(const EventStore& es) {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
     system("clear");
     try {
-        YearlyCalendar(es, year).printCalendar();
+        YearlyCalendar(mainStore, year).printCalendar();
     } catch(const invalid_date &e) {
         system("clear");
         std::cout << e.what() << "\nAdj meg egy új dátumot.\n";
@@ -197,134 +204,184 @@ void handleSearch(const EventStore& mainStore) {
     }
 }
 
-int main() {
-    MenuState currentState = MenuState::MAIN_MENU;
-    bool running = true;
-    EventStore mainStore;
-    mainStore+Event(2025,01,01,00,00,"Haho")+Event(2025,01,11,00,00,"GA");
+void handleFilter(EventStore& mainStore, FilterOpts option) {
+    system("clear");
+    try {
+        int year = NOPARAM, month = NOPARAM, day = NOPARAM;
+        bool inputOk = true;
+        // Az érvénytelen napokat/hónapokat egy dummy dátummal hibakezelhetjük, 
+        // legyen az év 1972, mert az szökőév, és 29-e is előfordulhat ha nem adunk meg külön évet
+        Date dummy(1972,1,1);
 
-    while (running) {
-        switch (currentState) {
-            case MenuState::MAIN_MENU: {
-                showMainMenu();
-                int choice;
-                std::cin >> choice;
-
-                switch (choice) {
-                    case 1:
-                        currentState = MenuState::MANAGE_MENU;
-                        break;
-                    case 2:
-                        currentState = MenuState::MONTHLY;
-                        break;
-                    case 3:
-                        currentState = MenuState::YEARLY;
-                        break;
-                    case 4:
-                        currentState = MenuState::EXIT;
-                        break;
-                    default:
-                        break;
+        switch (option) {
+            case FilterOpts::BYDATE: {
+                Date d;
+                std::cout << "Add meg a dátumot (ÉÉÉÉ. HH. NN.): ";
+                std::cin >> d;
+                if (!std::cin) inputOk = false;
+                else {
+                    year = d.getYear();
+                    month = d.getMonth();
+                    day = d.getDay();
                 }
                 break;
             }
-
-            case MenuState::MANAGE_MENU: {
-                showManageMenu();
-                int choice;
-                std::cin >> choice;
-
-                switch (choice) {
-                    case 1: {
-                        system("clear");
-                        std::cout << "Az összes eltárolt esemény: \n" << mainStore << std::endl;
-                        std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.ignore();
-                        std::cin.get();
-                        currentState = MenuState::MAIN_MENU;
-                        break;
-                    }
-                    case 2: {
-                        handleAddEvent(mainStore);
-                        std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.get();
-                        currentState = MenuState::MANAGE_MENU;
-                        break;
-                    }
-                    case 3: {
-                        handleDelEvent(mainStore);
-                        std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.get();
-                        currentState = MenuState::MANAGE_MENU;
-                        break;
-                    }
-                    case 4: {
-                        handleSearch(mainStore);
-                        std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.get();
-                        currentState = MenuState::MANAGE_MENU;
-                        break;
-                    }
-                    case 5: {
-                        currentState = MenuState::FILTER_MENU;
-                        break;
-                    }
-                    case 6: {
-                        currentState = MenuState::MAIN_MENU;
-                        break;
-                    }
-                }
+            case FilterOpts::BYYEARANDMONTH: {
+                std::cout << "Add meg az évet: ";
+                std::cin >> year;
+                std::cout << "Add meg a hónapot: ";
+                std::cin >> month;
+                dummy.setYear(year);
+                dummy.setMonth(month);
+                if (!std::cin) inputOk = false;
                 break;
             }
-
-            case MenuState::FILTER_MENU: {
-                showFilterMenu();
-                int choice;
-                std::cin >> choice;
-                switch (choice) {
-                    case 1:
-                        currentState = MenuState::MANAGE_MENU;
-                        break;
-                    case 2:
-                        currentState = MenuState::MONTHLY;
-                        break;
-                    case 3:
-                        currentState = MenuState::YEARLY;
-                        break;
-                    case 4:
-                        currentState = MenuState::EXIT;
-                        break;
-                    default:
-                        break;
-                }
+            case FilterOpts::BYMONTHANDDAY: {
+                std::cout << "Add meg a hónapot: ";
+                std::cin >> month;
+                std::cout << "Add meg a napot: ";
+                std::cin >> day;
+                dummy.setMonth(month);
+                dummy.setDay(year);
+                if (!std::cin) inputOk = false;
                 break;
             }
-
-            case MenuState::MONTHLY: {
-                showMonthly(mainStore);
-                std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                std::cin.get();
-                currentState = MenuState::MAIN_MENU;
-                system("clear");
+            case FilterOpts::BYYEAR: {
+                std::cout << "Add meg az évet: ";
+                std::cin >> year;
+                dummy.setYear(year);
+                if (!std::cin) inputOk = false;
                 break;
             }
-
-            case MenuState::YEARLY: {
-                showYearly(mainStore);
-                std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                std::cin.get();
-                currentState = MenuState::MAIN_MENU;
-                system("clear");
+            case FilterOpts::BYMONTH: {
+                std::cout << "Add meg a hónapot: ";
+                std::cin >> month;
+                dummy.setMonth(month);
+                if (!std::cin) inputOk = false;
                 break;
             }
-
-            case MenuState::EXIT: {
-                running = false;
-                std::cout << "Kilépés...\n";
+            case FilterOpts::BYDAY: {
+                std::cout << "Add meg a napot: ";
+                std::cin >> day;
+                dummy.setDay(day);
+                if (!std::cin) inputOk = false;
                 break;
             }
         }
-    }
 
-    return 0;
+        if (!inputOk) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return;
+        }
+
+        EventStore temp = mainStore.filterBy(year, month, day);
+        std::cout << temp << std::endl;
+
+        if (temp.getNEvents() != 0) {
+            std::cout << "Szeretnéd ezt a szűrést beállítani? (i/n)\n";
+            char c;
+            std::cin >> c;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            if (c == 'i') {
+                mainStore = temp;
+                system("clear");
+                std::cout << "A beállítás megtörtént." << std::endl;
+            } else if (c == 'n') {
+                system("clear");
+                std::cout << "Nem történt módosítás." << std::endl;
+            }
+        } else {
+            system("clear");
+            std::cout << "A szűrés nem tért vissza bejegyzésekkel." << std::endl;
+            std::cin.ignore();
+        }
+    } catch (const invalid_date &e) {
+        system("clear");
+        std::cout << e.what() << std::endl;
+        std::cin.ignore();
+    }
+}
+
+void handleCalOps(EventStore& mainStore, CalOpOpts option) {
+    system("clear");
+    try {
+        bool inputOk = true;
+
+        switch (option) {
+            case CalOpOpts::WHATDAY: {
+                Date d;
+                std::cout << "Add meg a dátumot (ÉÉÉÉ. HH. NN.): ";
+                std::cin >> d;
+                if (!std::cin) inputOk = false;
+                else {
+                    system("clear");
+                    std::cout << "A dátum " << d.getWeekDay() << "-re/ra esik." << std::endl;
+                    std::cin.get();
+                    std::cin.clear();
+                }
+                break;
+            }
+            case CalOpOpts::NUMBETWEEN: {
+                Date d1;
+                std::cout << "Add meg a kezdődátumot (ÉÉÉÉ. HH. NN.): ";
+                std::cin >> d1;
+                Date d2;
+                std::cout << "Add meg a végdátumot (ÉÉÉÉ. HH. NN.): ";
+                std::cin >> d2;
+                if (!std::cin) inputOk = false;
+                else {
+                    system("clear");
+                    std::cout << "A két dátum között " << d1-d2 << " nap van." << std::endl;
+                    std::cin.get();
+                    std::cin.clear();
+                }
+                break;
+            }
+            case CalOpOpts::NUMTILL: {
+                Date d1;
+                std::cout << "Add meg a mai dátumot (ÉÉÉÉ. HH. NN.): ";
+                std::cin >> d1;
+                Date d2;
+                std::cout << "Add meg a végdátumot (ÉÉÉÉ. HH. NN.): ";
+                std::cin >> d2;
+                // Ha végdátum hamarabb van mint a "mai" nap, akkor direkt rontsuk el, hogy kivételt dobjon
+                if (d2 <= d1) d2.setYear(9999); 
+                if (!std::cin) inputOk = false;
+                else {
+                    system("clear");
+                    std::cout << d2 << "-ig " << d1-d2 << " nap van hátra." << std::endl;
+                    std::cin.get();
+                    std::cin.clear();
+                }
+                break;
+            }
+            case CalOpOpts::DAYINX: {
+                Date d1;
+                std::cout << "Add meg a kezdő dátumot (ÉÉÉÉ. HH. NN.): ";
+                std::cin >> d1;
+                int day;
+                std::cout << "Add meg a napot: ";
+                std::cin >> day;
+                if (!std::cin) inputOk = false;
+                else {
+                    system("clear");
+                    std::cout << day << " nap múlva " << d1+day << " lesz." << std::endl;
+                    std::cin.get();
+                    std::cin.clear();
+                }
+                break;
+            }
+        }
+    if (!inputOk) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return;
+    }
+    } catch (const invalid_date &e) {
+        system("clear");
+        std::cout << e.what() << std::endl;
+        std::cin.ignore();
+    }
 }
