@@ -7,7 +7,7 @@ OBJ = memtrace.o string.o calendar.o date.o time.o event.o
 # Teszteset fordítása a "test" vezérlővel (anélkül a program rendesen lefordul)
 ifneq ($(MAKECMDGOALS),test)
   HEADERS += menu.h
-  OBJ += menu.o
+  OBJ += menu.o main.o
   TARGET = calendar
 else
   OBJ += test.o
@@ -24,7 +24,7 @@ $(TARGET): $(OBJ)
 # Fordítási lépések
 %.o: %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-
+  
 # Takarítás
 clean:
 	rm -f $(OBJ) $(TARGET)

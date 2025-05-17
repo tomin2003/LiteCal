@@ -9,7 +9,7 @@
 
 /* Statikus adattag definíció */
 
-const char* Date::weekDays[7] = { "Szombat", "Vasarnap", "Hetfo", "Kedd", "Szerda", "Csutortok", "Pentek" };
+const char* Date::weekDays[7] = { "szombat", "vasárnap", "hétfő", "kedd", "szerda", "csütortök", "péntek" };
 
 /* Getterek definíciója a headerben */
 
