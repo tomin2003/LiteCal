@@ -12,7 +12,7 @@
 #define NOPARAM -1
 
 /// @class EventStore
-/// A többi (éves, havi) naptár alaposztálya
+/// @brief A többi (éves, havi) naptár alaposztálya
 class EventStore {
 protected:
     size_t nEvents; ///< események száma
@@ -62,7 +62,7 @@ public:
     Event& find(const Event& searchEv);
     
     /// @brief Kereső függvény az eseménytárolóban.
-    /// @param searchCrit Az esemény ami a keresés kritériuma
+    /// @param searchEv Az esemény ami a keresés kritériuma
     /// @return Az esemény referenciája (konstans) (ha nincs találat, akkor except::nofind kivételt dob)
     const Event& find(const Event& searchEv) const;
 
@@ -123,7 +123,7 @@ public:
 std::ostream& operator<<(std::ostream& os, const EventStore &rhs);
 
 /// @class YearlyCalendar
-/// Egy származtatott adapterosztálya az eseménytárolónak.
+/// @brief Egy származtatott adapterosztálya az eseménytárolónak.
 class YearlyCalendar :public EventStore {
 private:
     int selYear; ///< kiválasztott év
@@ -133,7 +133,7 @@ public:
 
     /// @brief Paraméteres konstruktor
     /// @param src forrástároló
-    /// @param selMonth kiválasztott év (default = 1970)
+    /// @param selYear kiválasztott év (default = 1970)
     YearlyCalendar(const EventStore& src, int selYear = 1970) :EventStore(src.filterBy(selYear)), selYear(selYear) {}
 
     /// @brief Kiírja a naptárat éves nézetben.
@@ -142,7 +142,7 @@ public:
 };
 
 /// @class MonthlyCalendar
-/// Egy származtatott adapterosztálya az eseménytárolónak.
+/// @brief Egy származtatott adapterosztálya az eseménytárolónak.
 class MonthlyCalendar :public EventStore {
 private:
     int selYear; ///< kiválasztott év

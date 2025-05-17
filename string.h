@@ -57,7 +57,7 @@ public:
 
     /// @brief Sztring hozzáfűzés
     /// Az "strcat" C függvényt alkalmazza.
-    /// @param rhs Jobbról hozzáfűzött karakter
+    /// @param c Jobbról hozzáfűzött karakter
     /// @return Új String objektum
     String operator+(char c) const;
 
@@ -67,7 +67,7 @@ public:
     String& operator+=(const String& rhs);
 
     /// @brief Értékadó hozzáfűzés
-    /// @param rhs A hozzáfűzendő karakter
+    /// @param c A hozzáfűzendő karakter
     /// @return Hozzáfűzött String
     String& operator+=(char c);
     

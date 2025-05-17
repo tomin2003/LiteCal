@@ -6,10 +6,12 @@
 #include <iostream>
 #include "except.h"
 
+/// @class Time
+/// @brief Időpontokat nyílvántartó osztály
 class Time {
 private:
-    int hour;
-    int minute;
+    int hour; ///< óra
+    int minute; ///< perc
 public:
     /// @brief Default konstruktor
     /// Alapértelmezett időpont: 00:00 (éjfél)
@@ -38,11 +40,11 @@ public:
     /*Megjegyzés: a settereknél a konstruktort újrafuttatom, hogy megmaradjon a hibaellenőrzés az új időpontokra.*/
 
     /// @brief Setter függvény
-    /// @param óra
+    /// @param h óra
     void setHour(int h) { *this = Time(h, minute); }
 
     /// @brief Setter függvény
-    /// @param perc
+    /// @param m perc
     void setMinute(int m) { *this = Time(hour, m); }
 
     /// @brief Két időpont összehasonlítása

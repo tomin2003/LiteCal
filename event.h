@@ -21,7 +21,7 @@ public:
     /// @brief Paraméteres konstruktor
     /// @param evDate Dátum objektum
     /// @param evTime Idő objektum
-    /// @param desc Leírás sztring objektum
+    /// @param evDesc Leírás sztring objektum
     Event(const Date& evDate, const Time& evTime, const String& evDesc) :evDate(evDate), evTime(evTime), evDesc(evDesc) {}
 
     /// @brief Paraméteres konstruktor
@@ -30,7 +30,7 @@ public:
     /// @param d Nap
     /// @param h Óra
     /// @param mi Perc
-    /// @param desc Leírás sztring objektum
+    /// @param evDesc Leírás sztring objektum
     Event(int y, int mo, int d, int h, int mi, const String& evDesc) :evDate(y, mo, d), evTime(h, mi), evDesc(evDesc) {}
 
     /// @brief Getter függvény

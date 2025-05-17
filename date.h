@@ -43,15 +43,15 @@ public:
     /*Megjegyzés: a settereknél a konstruktort újrafuttatom, hogy megmaradjon a hibaellenőrzés az új dátumokra.*/
 
     /// @brief Setter függvény
-    /// @param év
+    /// @param y év
     void setYear(int y) { *this = Date(y, month, day); }
 
     /// @brief Setter függvény
-    /// @param hónap
+    /// @param m hónap
     void setMonth(int m) { *this = Date(year, m, day); }
 
     /// @brief Setter függvény
-    /// @param nap
+    /// @param d nap
     void setDay(int d) { *this = Date(year, month, d); }
 
     /// @brief Megállapítja egy dátumról, hogy érvényes-e.
@@ -113,7 +113,7 @@ public:
     bool operator<=(const Date& rhs) const;
 
     /// @brief Milyen dátum lesz adott nap elteltével
-    /// @param day + hány nap
+    /// @param rhs + hány nap
     /// @return Az új dátum
     Date operator+(int rhs) const;
 
