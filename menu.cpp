@@ -1,3 +1,5 @@
+// menu.h - menükezelő függvényeinek definíciói - SAXHSH
+
 #include "menu.h"
 
 #include "date.h"
@@ -12,9 +14,29 @@
 #include <algorithm>
 #include <limits>
 
+void waitForReturn() {
+    std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
+    std::cin.get();
+}
+
+void clearScreen() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
 
 void showMainMenu() {
-    system("clear");
+    clearScreen();
+    // Egy kis ASCII rajz - credit: https://patorjk.com/
+    std::cout
+    <<" _     _ _       _____       _ \n"
+    <<"| |   (_) |     /  __ \\     | |\n"
+    <<"| |    _| |_ ___| /  \\/ __ _| |\n"
+    <<"| |   | | __/ _ \\ |    / _` | |\n"
+    <<"| |___| | ||  __/ \\__/\\ (_| | |\n"
+    <<"\\_____/_|\\__\\___|\\____/\\__,_|_|\n";
     std::cout << "\n--- FŐMENÜ ---\n"
     << "1. Események kezelése\n"
     << "2. Naptárműveletek\n"
@@ -25,7 +47,7 @@ void showMainMenu() {
 }
 
 void showManageMenu() {
-    system("clear");
+    clearScreen();
     std::cout << "\n--- ESEMÉNYEK ---\n"
     << "1. Foglalt napok listázása\n"
     << "2. Új esemény felvétele\n"
@@ -37,7 +59,7 @@ void showManageMenu() {
 }
 
 void showCalOpsMenu() {
-    system("clear");
+    clearScreen();
     std::cout << "\n--- NAPTÁRMŰVELETEK ---\n"
     << "1. A hét melyik napjára esik egy nap?\n"
     << "2. Hány nap van a két dátum között?\n"
@@ -48,7 +70,7 @@ void showCalOpsMenu() {
 }
 
 void showFilterMenu() {
-    system("clear");
+    clearScreen();
     std::cout << "\n--- SZŰRÉS ---\n"
     << "1. Dátum szerint\n"
     << "2. Év és hónap szerint\n"
@@ -61,7 +83,7 @@ void showFilterMenu() {
 }
 
 void showMonthly(const EventStore& mainStore) {
-    system("clear");
+    clearScreen();
     std::cout << "\n--- Havi naptár ---\n"
     << "\nMelyik év? ";
     int year;
@@ -73,75 +95,74 @@ void showMonthly(const EventStore& mainStore) {
     std::cin >> month;
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
-    system("clear");
+    clearScreen();
     try {
         MonthlyCalendar(mainStore, year, month).printCalendar();
     } catch(const invalid_date &e) {
-        system("clear");
+        clearScreen();
         std::cout << e.what() << "\nAdj meg egy új dátumot.\n";
     }
 }
 
 void showYearly(const EventStore& mainStore) {
-    system("clear");
+    clearScreen();
     std::cout << "\n--- Éves naptár ---\n"
     << "\nMelyik év? ";
     int year;
     std::cin >> year;
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
-    system("clear");
+    clearScreen();
     try {
         YearlyCalendar(mainStore, year).printCalendar();
     } catch(const invalid_date &e) {
-        system("clear");
+        clearScreen();
         std::cout << e.what() << "\nAdj meg egy új dátumot.\n";
     }
 }
 
 void handleAddEvent(EventStore& mainStore) {
-    system("clear");
-    bool correct = false;
-    while (!correct) {
-        try {
-            Event ev;
-            std::cout << "Add meg az eseményt (ÉÉÉÉ. HH. NN. ÓÓ:PP - LEÍRÁS):\n";
-            std::cin >> ev;
-            if (!std::cin) {
-                std::cout << '\n';
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
-                continue;
-            }
-            char c;
-            std::cout << "Ez helyes? (i/n) " << ev << "\n";
-            std::cin >> c;
-            if (c == 'i') {
-                correct = true;
-                mainStore + ev;
-                mainStore.sort();   
-                system("clear");
-                std::cout << "Esemény hozzáadva.\n";
-                std::cin.ignore();
-            } else if (c == 'n') {
-                correct = false;
-                system("clear");
-            }
-        } catch (const invalid_date &e) {
-            system("clear");
-            std::cout << e.what() << std::endl;
-        } catch (const invalid_time &e) {
-            system("clear");
-            std::cout << e.what() << std::endl;
-        } catch (const evclash &e) {
-            system("clear");
-            std::cout << e.what() << std::endl;
+    clearScreen();
+    try {
+        Event ev;
+        std::cout << "Add meg az eseményt (ÉÉÉÉ. HH. NN. ÓÓ:PP - LEÍRÁS):\n";
+        std::cin >> ev;
+        if (!std::cin) {
+            std::cout << '\n';
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
         }
+        char c;
+        std::cout << "Ez helyes? (i/n) " << ev << "\n";
+        std::cin >> c;
+        if (c == 'i') {
+            mainStore + ev;
+            mainStore.sort();   
+            clearScreen();
+            std::cout << "Esemény hozzáadva.\n";
+            std::cin.ignore();
+        } else if (c == 'n') {
+            clearScreen();
+            std::cout << "Hozzáadás megszakítva." << std::endl;
+            std::cin.ignore();
+        }
+    } catch (const invalid_date &e) {
+        clearScreen();
+        std::cout << e.what() << std::endl;
+        std::cin.ignore();
+    } catch (const invalid_time &e) {
+        clearScreen();
+        std::cout << e.what() << std::endl;
+        std::cin.ignore();
+    } catch (const evclash &e) {
+        clearScreen();
+        std::cout << e.what() << std::endl;
+        std::cin.ignore();
     }
 }
 
 void handleDelEvent(EventStore& mainStore) {
-    system("clear");
+    clearScreen();
         std::cout << mainStore << std::endl;
     try {
         Event ev;
@@ -158,29 +179,29 @@ void handleDelEvent(EventStore& mainStore) {
             if (c == 'i') {
                 mainStore - ev; // A túlterhelt "-" operátor tud nofind kivételt dobni
                 mainStore.sort(); // A törlés után egy újrarendezés
-                system("clear");
+                clearScreen();
                 std::cout << "Esemény törölve." << std::endl;
                 std::cin.ignore();
             } else if (c == 'n') {
-                system("clear");
+                clearScreen();
                 std::cout << "Törlés megszakítva." << std::endl;
-                return;
+                std::cin.ignore();
             }
         }
     } catch (const invalid_date &e) {
-        system("clear");
+        clearScreen();
         std::cout << e.what() << std::endl;
     } catch (const invalid_time &e) {
-        system("clear");
+        clearScreen();
         std::cout << e.what() << std::endl;
     } catch (const nofind &e) {
-        system("clear");
+        clearScreen();
         std::cout << e.what() << std::endl;
     }
 }
 
 void handleSearch(const EventStore& mainStore) {
-    system("clear");
+    clearScreen();
     try {
         Event ev;
         std::cout << "Add meg az eseményt (ÉÉÉÉ. HH. NN. ÓÓ:PP - LEÍRÁS):\n";
@@ -193,19 +214,19 @@ void handleSearch(const EventStore& mainStore) {
         mainStore.find(ev);
         std::cout << "A(z) '" << ev << "' esemény benne van a listában.\n";
     } catch (const invalid_date &e) {
-        system("clear");
+        clearScreen();
         std::cout << e.what() << std::endl;
     } catch (const invalid_time &e) {
-        system("clear");
+        clearScreen();
         std::cout << e.what() << std::endl;
     } catch (const nofind &e) {
-        system("clear");
+        clearScreen();
         std::cout << e.what() << std::endl;
     }
 }
 
 void handleFilter(EventStore& mainStore, FilterOpts option) {
-    system("clear");
+    clearScreen();
     try {
         int year = NOPARAM, month = NOPARAM, day = NOPARAM;
         bool inputOk = true;
@@ -286,26 +307,26 @@ void handleFilter(EventStore& mainStore, FilterOpts option) {
 
             if (c == 'i') {
                 mainStore = temp;
-                system("clear");
+                clearScreen();
                 std::cout << "A beállítás megtörtént." << std::endl;
             } else if (c == 'n') {
-                system("clear");
+                clearScreen();
                 std::cout << "Nem történt módosítás." << std::endl;
             }
         } else {
-            system("clear");
+            clearScreen();
             std::cout << "A szűrés nem tért vissza bejegyzésekkel." << std::endl;
             std::cin.ignore();
         }
     } catch (const invalid_date &e) {
-        system("clear");
+        clearScreen();
         std::cout << e.what() << std::endl;
         std::cin.ignore();
     }
 }
 
 void handleCalOps(EventStore& mainStore, CalOpOpts option) {
-    system("clear");
+    clearScreen();
     try {
         bool inputOk = true;
 
@@ -316,7 +337,7 @@ void handleCalOps(EventStore& mainStore, CalOpOpts option) {
                 std::cin >> d;
                 if (!std::cin) inputOk = false;
                 else {
-                    system("clear");
+                    clearScreen();
                     std::cout << "A dátum " << d.getWeekDay() << "-re/ra esik." << std::endl;
                     std::cin.get();
                     std::cin.clear();
@@ -332,7 +353,7 @@ void handleCalOps(EventStore& mainStore, CalOpOpts option) {
                 std::cin >> d2;
                 if (!std::cin) inputOk = false;
                 else {
-                    system("clear");
+                    clearScreen();
                     std::cout << "A két dátum között " << d1-d2 << " nap van." << std::endl;
                     std::cin.get();
                     std::cin.clear();
@@ -350,7 +371,7 @@ void handleCalOps(EventStore& mainStore, CalOpOpts option) {
                 if (d2 <= d1) d2.setYear(9999); 
                 if (!std::cin) inputOk = false;
                 else {
-                    system("clear");
+                    clearScreen();
                     std::cout << d2 << "-ig " << d1-d2 << " nap van hátra." << std::endl;
                     std::cin.get();
                     std::cin.clear();
@@ -366,7 +387,7 @@ void handleCalOps(EventStore& mainStore, CalOpOpts option) {
                 std::cin >> day;
                 if (!std::cin) inputOk = false;
                 else {
-                    system("clear");
+                    clearScreen();
                     std::cout << day << " nap múlva " << d1+day << " lesz." << std::endl;
                     std::cin.get();
                     std::cin.clear();
@@ -380,7 +401,7 @@ void handleCalOps(EventStore& mainStore, CalOpOpts option) {
         return;
     }
     } catch (const invalid_date &e) {
-        system("clear");
+        clearScreen();
         std::cout << e.what() << std::endl;
         std::cin.ignore();
     }

@@ -1,6 +1,7 @@
 // calendar.cpp naptárkezelő osztály (definíciók) - SAXHSH
 
 #include "calendar.h"
+
 #include "event.h"
 #include "string.h"
 #include "date.h"
@@ -160,7 +161,7 @@ std::ostream& operator<<(std::ostream& os, const EventStore& rhs) {
     return os;
 }
 
-void MonthlyCalendar::printCalendar(std::ostream& os) {
+void MonthlyCalendar::printCalendar(std::ostream& os) const {
     using namespace std; // sokszor kéne kiírni, itt a függvényen belül nem lesz baj belőle
     // fejléc
     os << "\t\t     " << selYear << ". " << setw(2) << setfill('0') << selMonth << '.' << endl;
@@ -200,7 +201,7 @@ void MonthlyCalendar::printCalendar(std::ostream& os) {
     os << "\n" << *this << endl;
 }
 
-void YearlyCalendar::printCalendar(std::ostream& os) {
+void YearlyCalendar::printCalendar(std::ostream& os) const {
     using namespace std; // sokszor kéne kiírni, itt a függvényen belül nem lesz baj belőle
     // 12 db hónap egymásutánja
     for (int month = 1; month <= 12; month++) {

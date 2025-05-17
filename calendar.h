@@ -1,4 +1,5 @@
 // calendar.h naptárkezelő osztály (deklarációk, inlineok) - SAXHSH
+
 #ifndef CALENDAR_H
 #define CALENDAR_H
 
@@ -84,6 +85,7 @@ public:
     void sort();
 
     /// @brief Szűrés egy adott paraméter szerint az eseménytárolóban.
+    /// @brief Egy paraméter explicit elhagyásához a "NOPARAM" makró használható.
     /// @param year év paraméter (elhagyható)
     /// @param month hónap paraméter (elhagyható)
     /// @param day nap paraméter (elhagyható)
@@ -136,7 +138,7 @@ public:
 
     /// @brief Kiírja a naptárat éves nézetben.
     /// @param os output stream
-    void printCalendar(std::ostream& os = std::cout);
+    void printCalendar(std::ostream& os = std::cout) const;
 };
 
 /// @class MonthlyCalendar
@@ -158,7 +160,7 @@ public:
 
     /// @brief Kiírja a naptárat havi nézetben.
     /// @param os output stream
-    void printCalendar(std::ostream& os = std::cout);
+    void printCalendar(std::ostream& os = std::cout) const;
 };
 
 #endif

@@ -37,6 +37,12 @@ enum class CalOpOpts {
     DAYINX
 };
 
+/// @brief Billentyű bemenettel késleltetést generáló függvény.
+void waitForReturn();
+
+/// @brief Platformfüggetlenül a konzol aktuális tartalmának törlése.
+void clearScreen();
+
 /// @brief A főmenü menüelemeit és a címképernyőt kiíró függvény.
 void showMainMenu();
 

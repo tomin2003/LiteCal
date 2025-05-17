@@ -30,8 +30,8 @@ public:
     /// @param d Nap
     /// @param h Óra
     /// @param mi Perc
-    /// @param s C-sztring leírás
-    Event(int y, int mo, int d, int h, int mi, const char* s) :evDate(y, mo, d), evTime(h, mi), evDesc(s) {}
+    /// @param desc Leírás sztring objektum
+    Event(int y, int mo, int d, int h, int mi, const String& evDesc) :evDate(y, mo, d), evTime(h, mi), evDesc(evDesc) {}
 
     /// @brief Getter függvény
     /// @return Dátum objektum
@@ -65,22 +65,17 @@ public:
     /// @brief Esemény összehasonlítása dátum alapján
     /// @param rhs Összehasonlítás jobb oldala
     /// @return lhs frisebb dátumú-e mint rhs
-    bool operator>(const Event& rhs);
+    bool operator>(const Event& rhs) const;
 
     /// @brief Esemény összehasonlítása dátum alapján
     /// @param rhs Összehasonlítás jobb oldala
     /// @return lhs régebbi dátumú-e mint rhs
-    bool operator<(const Event& rhs);
+    bool operator<(const Event& rhs) const;
 
     /// @brief Két esemény megegyezősége
     /// @param rhs Összehasonlítás jobb oldala
     /// @return lhs és rhs megegyező dátumúak-e
-    bool operator==(const Event& rhs);
-
-    /// @brief Két esemény megegyezősége
-    /// @param rhs Összehasonlítás jobb oldala
-    /// @return lhs és rhs megegyező dátumúak-e
-    const bool operator==(const Event& rhs) const;
+    bool operator==(const Event& rhs) const;
 };
 
 /// @brief Egy eseményt kiíró stream operátor.

@@ -16,7 +16,6 @@ int main() {
     MenuState currentState = MenuState::MAIN_MENU;
     bool running = true;
     EventStore mainStore;
-    mainStore+Event(2025,01,01,00,00,"Haho")+Event(2025,01,11,00,00,"GA");
 
     while (running) {
         switch (currentState) {
@@ -58,28 +57,28 @@ int main() {
 
                 switch (choice) {
                     case 1:
-                        system("clear");
-                        std::cout << "A foglalt események: \n" << mainStore << std::endl;
-                        std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.get();
+                        clearScreen();
+                        if (mainStore.getNEvents() != 0) {
+                            std::cout << "A foglalt események: \n" << mainStore << std::endl;
+                        } else {
+                            std::cout << "Még nincs felvett esemény." << std::endl;
+                        }
+                        waitForReturn();
                         currentState = MenuState::MANAGE_MENU;
                         break;
                     case 2:
                         handleAddEvent(mainStore);
-                        std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.get();
+                        waitForReturn();
                         currentState = MenuState::MANAGE_MENU;
                         break;
                     case 3:
                         handleDelEvent(mainStore);
-                        std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.get();
+                        waitForReturn();
                         currentState = MenuState::MANAGE_MENU;
                         break;
                     case 4:
                         handleSearch(mainStore);
-                        std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                        std::cin.get();
+                        waitForReturn();
                         currentState = MenuState::MANAGE_MENU;
                         break;
                     case 5:
@@ -129,12 +128,11 @@ int main() {
 
                 if (validOpt) {
                     handleCalOps(mainStore, selOpt);
-                    std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                    std::cin.get();
+                    waitForReturn();
                     currentState = MenuState::CAL_OPS_MENU;
                 }
 
-                system("clear");
+                clearScreen();
                 break;
             }
 
@@ -179,29 +177,26 @@ int main() {
 
                 if (validOpt) {
                     handleFilter(mainStore, selOpt);
-                    std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                    std::cin.get();
+                    waitForReturn();
                     currentState = MenuState::FILTER_MENU;
                 }
 
-                system("clear");
+                clearScreen();
                 break;
             }
 
             case MenuState::MONTHLY:
                 showMonthly(mainStore);
-                std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                std::cin.get();
+                waitForReturn();
                 currentState = MenuState::MAIN_MENU;
-                system("clear");
+                clearScreen();
                 break;
 
             case MenuState::YEARLY:
                 showYearly(mainStore);
-                std::cout << "Nyomj meg bármilyen gombot a visszatéréshez...";
-                std::cin.get();
+                waitForReturn();
                 currentState = MenuState::MAIN_MENU;
-                system("clear");
+                clearScreen();
                 break;
 
             case MenuState::EXIT:
@@ -210,6 +205,5 @@ int main() {
                 break;
         }
     }
-
     return 0;
 }

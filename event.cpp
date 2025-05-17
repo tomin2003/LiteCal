@@ -15,19 +15,15 @@ Event& Event::operator=(const Event& rhs)  {
 
 /*Logikai műveletek*/
 
-bool Event::operator>(const Event& rhs) {
+bool Event::operator>(const Event& rhs) const {
     return (evDate > rhs.evDate) || (evDate == rhs.evDate && evTime > rhs.evTime);
 }
 
-bool Event::operator<(const Event& rhs) {
+bool Event::operator<(const Event& rhs) const {
     return (evDate < rhs.evDate) || (evDate == rhs.evDate && evTime < rhs.evTime);
 }
     
-bool Event::operator==(const Event& rhs) {
-    return evDate == rhs.evDate && evTime == rhs.evTime;
-}
-
-const bool Event::operator==(const Event& rhs) const {
+bool Event::operator==(const Event& rhs) const {
     return evDate == rhs.evDate && evTime == rhs.evTime;
 }
 

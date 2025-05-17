@@ -103,8 +103,8 @@ int main() {
 
     TEST(Date, WEEKDAY) {
         Date d(2025, 04, 25); // péntek van/volt
-        EXPECT_STREQ("Pentek", d.getWeekDay()); // péntek
-        EXPECT_STRNE("Szombat", d.getWeekDay()); // nem szombat
+        EXPECT_STREQ("péntek", d.getWeekDay()); // péntek
+        EXPECT_STRNE("szombat", d.getWeekDay()); // nem szombat
     } END
     
     TEST(Date, DATEINDAYS) {
@@ -347,12 +347,22 @@ int main() {
         Event e6(2025,9,16,10,00, "Idei2");
         // Különböző év-beli események
         Event e7(2028,01,26,01,00, "Másév1");
-        Event e8(2026,12,16,10,00, "Másév2");
+        Event e8(2026,02,22,10,00, "Másév2");
+        Event e9(2026,02,16,10,00, "Másév2");
         EventStore es;
-        es+e1+e2+e3+e4+e5+e6+e7+e8;
-        std::cout << "Nap szerint szűrve:\n" << es.filterBy(2025, 2, 22) << std::endl;
-        std::cout << "Hónap szerint szűrve:\n" << es.filterBy(2025, 2) << std::endl;
-        std::cout << "Év szerint szűrve:\n" << es.filterBy(2025) << std::endl;
+        es+e1+e2+e3+e4+e5+e6+e7+e8+e9;
+        // 2db 2025.02.22. dátumú eseményt várunk
+        EXPECT_EQ(2, static_cast<int>(es.filterBy(2025,02,22).getNEvents()));
+        // 4db 2025 februári eseményt várunk
+        EXPECT_EQ(4, static_cast<int>(es.filterBy(2025,2).getNEvents()));
+        // 3db február 22-i eseményt várunk
+        EXPECT_EQ(3, static_cast<int>(es.filterBy(NOPARAM,2,22).getNEvents()));
+        // 2db 2026-os eseményt várunk
+        EXPECT_EQ(2, static_cast<int>(es.filterBy(2026).getNEvents()));
+        // 6db februári eseményt várnk
+        EXPECT_EQ(6, static_cast<int>(es.filterBy(NOPARAM,2).getNEvents()));
+        // 2db 16-i eseményt várunk
+        EXPECT_EQ(2, static_cast<int>(es.filterBy(NOPARAM,NOPARAM,16).getNEvents()));
     } END
 
     TEST(EventStore, STREAM) {
@@ -378,8 +388,31 @@ int main() {
         EventStore es;
         es+e1+e2+e3+e4+e5+e6;
         YearlyCalendar y26(es, 2026);
-        std::cout << "2026-os események:\n"<< y26 << std::endl;
-        y26.printCalendar();
+        // 3db eseményt várunk
+        EXPECT_EQ(3, static_cast<int>(y26.getNEvents()));
+        
+    } END
+
+    TEST(YearlyCalendar, PRINT) {
+        // 2025-beli - nincs benne
+        Event e1(2025,02,22,10,00, "Kívül1");
+        Event e2(2025,8,26,01,00, "Kívül2");
+        Event e3(2025,02,10,10,00, "Kívül3");
+        // 2026-beli
+        Event e4(2026,9,16,10,00, "Benne1");
+        Event e5(2026,01,26,01,00, "Benne2");
+        Event e6(2026,12,16,10,00, "Benne3");
+        EventStore es;
+        es+e1+e2+e3+e4+e5+e6;
+        YearlyCalendar y26(es, 2026);
+        std::stringstream ss;
+        y26.printCalendar(ss);
+        // Azt várjuk, hogy tartalmazza a fejlécben "2026."-ot
+        EXPECT_TRUE(ss.str().find("2026.") != std::string::npos);
+        // Azt várjuk, hogy "*"-al legyen megjelölve a foglalt nap
+        EXPECT_TRUE(ss.str().find("16*") != std::string::npos);
+        // Azt várjuk, hogy "*"-al legyen megjelölve a foglalt nap
+        EXPECT_TRUE(ss.str().find("26*") != std::string::npos);
     } END
 
     TEST(MonthlyCalendar, CTOR) {
@@ -393,9 +426,31 @@ int main() {
         Event e6(2026,12,16,10,00, "Kívül4");
         EventStore es;
         es+e1+e2+e3+e4+e5+e6;
-        MonthlyCalendar m2508(es, 2025, 2);
-        std::cout << "2025-ös augusztusi események:\n"<< m2508 << std::endl;
-        m2508.printCalendar();
+        MonthlyCalendar m2508(es, 2025, 8);
+        // 2db eseményt várunk
+        EXPECT_EQ(2, static_cast<int>(m2508.getNEvents()));
+    } END
+
+    TEST(MonthlyCalendar, PRINT) {
+        // 2025-beli
+        Event e1(2025,02,22,10,00, "Kívül1");
+        Event e2(2025,8,26,01,00, "Benne1");
+        Event e3(2025,8,10,10,00, "Benne2");
+        // 2026-beli
+        Event e4(2026,9,16,10,00, "Kívül2");
+        Event e5(2026,12,26,01,00, "Kívül3");
+        Event e6(2026,12,16,10,00, "Kívül4");
+        EventStore es;
+        es+e1+e2+e3+e4+e5+e6;
+        MonthlyCalendar m2508(es, 2025, 8);
+        std::stringstream ss;
+        m2508.printCalendar(ss);
+        // Azt várjuk, hogy tartalmazza a fejlécben "2025. 08."-at
+        EXPECT_TRUE(ss.str().find("2025. 08.") != std::string::npos);
+        // Azt várjuk, hogy "*"-al legyen megjelölve a foglalt nap
+        EXPECT_TRUE(ss.str().find("26*") != std::string::npos);
+        // Azt várjuk, hogy "*"-al legyen megjelölve a foglalt nap
+        EXPECT_TRUE(ss.str().find("10*") != std::string::npos);
     } END
 
     // JPORTA működéséhez
