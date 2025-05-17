@@ -1,4 +1,4 @@
-// menu.cpp - menüvezérelt program implementációja - SAXHSH
+// main.cpp főprogram - SAXHSH
 
 #include "date.h"
 #include "time.h"

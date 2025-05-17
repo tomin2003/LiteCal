@@ -1,4 +1,5 @@
 // test.cpp tesztprogram, a gtest_lite segítségével teszteli az osztályok helyes viselkedését - SAXHSH
+
 #include "gtest_lite.h"
 
 #include "date.h"

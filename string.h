@@ -1,4 +1,5 @@
 // string.h dinamikus sztringkezelő osztály (deklarációk/inlineok) - SAXHSH
+
 #ifndef STRING_H
 #define STRING_H
 

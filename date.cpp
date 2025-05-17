@@ -1,4 +1,4 @@
-// Date.cpp dátum és időkezelő osztály (definíciók) - SAXHSH
+// date.cpp dátum és időkezelő osztály (definíciók) - SAXHSH
 
 #include "date.h"
 #include <iostream>

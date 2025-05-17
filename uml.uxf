@@ -48,7 +48,7 @@ asa
 +constructors  
 +getters
 +operator==, &lt;, &gt;, &lt;=, &gt;=(): bool   
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>690</x><y>90</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>240</y><w>210</w><h>200</h></coordinates><panel_attributes>&lt;&lt;Date&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>690</x><y>90</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>240</y><w>210</w><h>210</h></coordinates><panel_attributes>&lt;&lt;Date&gt;&gt;
 --
 -year: int
 -month: int
@@ -59,10 +59,11 @@ _-weekDays: const char*[7]_
 +getters  
 +isValid(), isLeapYear(): bool
 +getWeekDay(): const char*
++getWeekDayIdx(): int
 +daysInMonth(), dateInDays(): int
 +operator==, &lt;, &gt;, &lt;=, &gt;= (): bool
 +operator+(), operator-(): Date/int
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>450</y><w>210</w><h>130</h></coordinates><panel_attributes>&lt;&lt;Time&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>230</x><y>460</y><w>210</w><h>130</h></coordinates><panel_attributes>&lt;&lt;Time&gt;&gt;
 --
 -hour: int
 -minute: int
@@ -71,4 +72,4 @@ _-weekDays: const char*[7]_
 +getters
 +isValid(): bool
 +operator==, &lt;, &gt;, &lt;=, &gt;= (): bool 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>80</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>120</y><w>110</w><h>170</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>170</y><w>110</w><h>330</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;310</additional_attributes></element><element><id>Relation</id><coordinates><x>730</x><y>290</y><w>130</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>110;10;10;110</additional_attributes></element></diagram>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>80</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>120</y><w>110</w><h>170</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>430</x><y>170</y><w>110</w><h>340</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>90;10;10;320</additional_attributes></element><element><id>Relation</id><coordinates><x>730</x><y>290</y><w>130</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>110;10;10;110</additional_attributes></element></diagram>

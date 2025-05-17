@@ -1,4 +1,5 @@
 // date.h dátumkezelő osztály (deklarációk/inlineok) - SAXHSH
+
 #ifndef DATE_H
 #define DATE_H
 
